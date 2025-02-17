@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/modern-normalize/modern-normalize.css";
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 20px;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #e6e6e6;
+}
+
+a {
+  text-decoration: none;
+}
