@@ -1,0 +1,46 @@
+<div class="results-wrapper">
+  <app-filtering-criteria />
+  <div class="cards">
+    @for(item of searchResults ; track item.id) {
+    <mat-card
+      appearance="outlined"
+      [ngClass]="getBorderColor(item.snippet.publishedAt)"
+    >
+      <mat-card-header>
+        <img
+          mat-card-image
+          [src]="item.snippet.thumbnails.medium.url"
+          alt="Photo of a Shiba Inu"
+        />
+      </mat-card-header>
+
+      <mat-card-actions>
+        <div class="stat-container">
+          <i class="material-icons"> visibility </i>
+          <p>{{ item.statistics.viewCount }}</p>
+        </div>
+        <div class="stat-container">
+          <i class="material-icons"> thumb_up </i>
+          <p>{{ item.statistics.likeCount }}</p>
+        </div>
+        <div class="stat-container">
+          <i class="material-icons"> thumb_down </i>
+          <p>{{ item.statistics.dislikeCount }}</p>
+        </div>
+        <div class="stat-container">
+          <i class="material-icons"> chat </i>
+          <p>{{ item.statistics.commentCount }}</p>
+        </div>
+        <p>{{ getBorderColor(item.snippet.publishedAt) }}</p>
+      </mat-card-actions>
+
+      <mat-card-content>
+        <p>
+          {{ item.snippet.title }}
+        </p>
+        <button mat-flat-button class="more-button">more...</button>
+      </mat-card-content>
+    </mat-card>
+    }
+  </div>
+</div>

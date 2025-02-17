@@ -15,3 +15,16 @@ body {
 a {
   text-decoration: none;
 }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: inherit;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6a459b;
+  border-radius: 3px;
+}
