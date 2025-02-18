@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FilteringCriteriaComponent } from './filtering-criteria/filtering-criteria.component';
 import { SearchResultsService } from './search-results.service';
 import { MatCardModule } from '@angular/material/card';
@@ -17,18 +17,16 @@ import { CommonModule } from '@angular/common';
   styleUrl: './search-results.component.scss',
 })
 export class SearchResultsComponent {
+  @Input() searchString = '';
+  @Input() isSettingsOpen!: boolean;
+  filterCriterion = '';
   private searchResultsService = inject(SearchResultsService);
 
-  ngOnInit(): void {
-    const currentDate = new Date();
-    console.log('Date', currentDate);
-    const tempDate =
-      this.searchResultsService.mockedSearchData[0].snippet.publishedAt;
-    console.log('tempdate', new Date(tempDate).getDay());
-  }
-
   get searchResults() {
-    return this.searchResultsService.mockedSearchData;
+    return this.searchResultsService.getSearchResults(
+      this.searchString,
+      this.filterCriterion
+    );
   }
 
   getBorderColor(date: string) {
@@ -45,5 +43,9 @@ export class SearchResultsComponent {
     } else {
       return 'blue';
     }
+  }
+
+  handleFilterCriterionChange(criterion: string) {
+    this.filterCriterion = criterion;
   }
 }

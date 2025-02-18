@@ -6,6 +6,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [
     MatSlideToggleModule,
     NavbarComponent,
@@ -17,4 +18,14 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 })
 export class AppComponent {
   title = 'youtube-app';
+  searchString = '';
+  isSettingsOpen = false;
+
+  onSearchSubmit(data: string) {
+    this.searchString = data;
+  }
+
+  onSettingsClick(isOpen: boolean) {
+    this.isSettingsOpen = isOpen;
+  }
 }

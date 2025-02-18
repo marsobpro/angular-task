@@ -3,14 +3,20 @@
     <a href="/" class="button logo-button" mat-icon-button>
       <span class="material-icons icon logo-icon"> play_arrow </span>
     </a>
-    <form class="form-container">
+    <form class="form-container" (ngSubmit)="onSubmit()" name="searchForm">
       <div class="search-input-wrapper">
-        <input matInput placeholder="ASD" />
+        <input
+          type="text"
+          name="search"
+          matInput
+          placeholder="What do you want to find out?"
+          [(ngModel)]="searchString"
+        />
         <button mat-flat-button class="button">search</button>
       </div>
-      <a class="button settings-button">
+      <button class="button settings-button" (click)="onSettingsClick()">
         <span class="material-icons icon"> tune </span>
-      </a>
+      </button>
     </form>
   </div>
 

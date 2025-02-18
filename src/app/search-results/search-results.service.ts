@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class SearchResultsService {
-  mockedSearchData = [
+  private mockedSearchData = [
     {
       kind: 'youtube#video',
       etag: '"Fznwjl6JEQdo1MGvHOGaz_YanRU/tmmI1yiRrmLWlKikXk1gD3TXsUI"',
@@ -761,4 +761,25 @@ export class SearchResultsService {
       },
     },
   ];
+
+  getSearchResults(searchString: string, filterCriterion: string) {
+    let results = this.mockedSearchData.filter((item) =>
+      item.snippet.title.toLowerCase().includes(searchString.toLowerCase())
+    );
+
+    if (filterCriterion === 'views') {
+      results = results.sort(
+        (a, b) =>
+          Number(b.statistics.viewCount) - Number(a.statistics.viewCount)
+      );
+    } else if (filterCriterion === 'date') {
+      results = results.sort(
+        (a, b) =>
+          new Date(b.snippet.publishedAt).getTime() -
+          new Date(a.snippet.publishedAt).getTime()
+      );
+    }
+
+    return results;
+  }
 }

@@ -36,7 +36,7 @@ mat-card-header {
 }
 
 mat-card-actions {
-  padding-inline: 1.2rem;
+  padding-inline: 1rem;
   display: flex;
   justify-content: space-between;
 }
@@ -45,25 +45,35 @@ mat-card-actions {
   display: flex;
   align-items: center;
   font-size: 0.75rem;
+  font-weight: 500;
   gap: 0.2rem;
+  p {
+    margin: 0;
+    padding-top: 3px;
+  }
   i {
+    display: flex;
     font-size: 1rem;
   }
 }
 
 mat-card-content {
-  margin-top: auto;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
   width: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
   font-size: 1rem;
   font-weight: 500;
+
+  p {
+    margin-top: 0;
+  }
 }
 
 .more-button {
   width: 50%;
-  margin-inline: auto;
-  left: 50%;
-  transform: translateX(-50%);
 }

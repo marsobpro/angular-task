@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-filtering-criteria',
@@ -7,13 +7,15 @@ import { Component } from '@angular/core';
   styleUrl: './filtering-criteria.component.scss',
 })
 export class FilteringCriteriaComponent {
+  @Input() isSettingsOpen = false;
+  @Output() filterCriterion = new EventEmitter();
   searchCriteria = [
     { name: 'date', value: 'date' },
     { name: 'count of views', value: 'views' },
     { name: 'by word or sentence', value: 'wordOrSentence' },
   ];
 
-  applySearch(criteria: string) {
-    console.log(`Applying search for: ${criteria}`);
+  handleCriterionClick(criterion: string) {
+    this.filterCriterion.emit(criterion);
   }
 }

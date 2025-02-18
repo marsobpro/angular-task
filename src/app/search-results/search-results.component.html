@@ -1,5 +1,5 @@
 <div class="results-wrapper">
-  <app-filtering-criteria />
+  <app-filtering-criteria [isSettingsOpen]="isSettingsOpen" (filterCriterion)="handleFilterCriterionChange($event)" />
   <div class="cards">
     @for(item of searchResults ; track item.id) {
     <mat-card
@@ -31,7 +31,6 @@
           <i class="material-icons"> chat </i>
           <p>{{ item.statistics.commentCount }}</p>
         </div>
-        <p>{{ getBorderColor(item.snippet.publishedAt) }}</p>
       </mat-card-actions>
 
       <mat-card-content>

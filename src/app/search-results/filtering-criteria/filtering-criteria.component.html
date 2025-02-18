@@ -1,6 +1,9 @@
+@if (isSettingsOpen) {
 <div class="content-wrapper">
   <h3 class="sorting-header">Sorting by:</h3>
   @for (item of searchCriteria; track item.value) {
-  <button class="criterion">{{ item.name }}</button>
+  <button class="criterion" (click)="handleCriterionClick(item.value)">{{ item.name }}</button>
   }
 </div>
+
+}
