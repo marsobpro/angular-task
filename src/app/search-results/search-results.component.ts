@@ -4,7 +4,8 @@ import { SearchResultsService } from './search-results.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from "../shared/button/button.component";
+import { ButtonComponent } from '../shared/button/button.component';
+import { UploadAgeDirective } from '../directives/upload-age-directive/upload-age.directive';
 
 @Component({
   selector: 'app-search-results',
@@ -13,8 +14,9 @@ import { ButtonComponent } from "../shared/button/button.component";
     MatCardModule,
     MatButtonModule,
     CommonModule,
-    ButtonComponent
-],
+    ButtonComponent,
+    UploadAgeDirective,
+  ],
   templateUrl: './search-results.component.html',
   styleUrl: './search-results.component.scss',
 })
@@ -29,22 +31,6 @@ export class SearchResultsComponent {
       this.searchString,
       this.filterCriterion
     );
-  }
-
-  getBorderColor(date: string) {
-    const currentDate = new Date();
-    const dateDifference = currentDate.getTime() - new Date(date).getTime();
-    const differenceInDays = dateDifference / (1000 * 3600 * 24);
-
-    if (differenceInDays > 180) {
-      return 'red';
-    } else if (differenceInDays >= 30 && differenceInDays <= 180) {
-      return 'yellow';
-    } else if (differenceInDays >= 7 && differenceInDays <= 30) {
-      return 'green';
-    } else {
-      return 'blue';
-    }
   }
 
   handleFilterCriterionChange(criterion: string) {
