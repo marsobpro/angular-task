@@ -1,5 +1,8 @@
 <div class="results-wrapper">
-  <app-filtering-criteria [isSettingsOpen]="isSettingsOpen" (filterCriterion)="handleFilterCriterionChange($event)" />
+  <app-filtering-criteria
+    [isSettingsOpen]="isSettingsOpen"
+    (filterCriterion)="handleFilterCriterionChange($event)"
+  />
   <div class="cards">
     @for(item of searchResults ; track item.id) {
     <mat-card
@@ -37,7 +40,8 @@
         <p>
           {{ item.snippet.title }}
         </p>
-        <button mat-flat-button class="more-button">more...</button>
+        <!-- <button mat-flat-button class="more-button">more...</button> -->
+        <app-button>more...</app-button>
       </mat-card-content>
     </mat-card>
     }

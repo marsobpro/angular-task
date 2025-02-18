@@ -4,6 +4,7 @@ import { SearchResultsService } from './search-results.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { ButtonComponent } from "../shared/button/button.component";
 
 @Component({
   selector: 'app-search-results',
@@ -12,7 +13,8 @@ import { CommonModule } from '@angular/common';
     MatCardModule,
     MatButtonModule,
     CommonModule,
-  ],
+    ButtonComponent
+],
   templateUrl: './search-results.component.html',
   styleUrl: './search-results.component.scss',
 })
