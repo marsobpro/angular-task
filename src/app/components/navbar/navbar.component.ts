@@ -12,18 +12,18 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  @Output() search = new EventEmitter();
-  @Output() isSettingsOpen = new EventEmitter();
+  @Output() searchQuery = new EventEmitter();
+  @Output() isSettingsPanelOpen = new EventEmitter();
 
   isSortingOpen = false;
   searchString = '';
 
   onSubmit() {
-    this.search.emit(this.searchString);
+    this.searchQuery.emit(this.searchString);
   }
 
   onSettingsClick() {
     this.isSortingOpen = !this.isSortingOpen;
-    this.isSettingsOpen.emit(this.isSortingOpen);
+    this.isSettingsPanelOpen.emit(this.isSortingOpen);
   }
 }

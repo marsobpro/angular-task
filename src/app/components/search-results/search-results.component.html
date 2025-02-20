@@ -1,6 +1,6 @@
 <div class="results-wrapper">
   <app-filtering-criteria
-    [isSettingsOpen]="isSettingsOpen"
+    [isSettingsOpen]="isSettingsPanelOpen"
     (filterCriterion)="handleFilterCriterionChange($event)"
     (search)="onWordOrSentenceSearch($event)"
   />
@@ -42,7 +42,6 @@
         <p>
           {{ item.snippet.title }}
         </p>
-        <!-- <button mat-flat-button class="more-button">more...</button> -->
         <app-button>more...</app-button>
       </mat-card-content>
     </mat-card>

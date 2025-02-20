@@ -1,3 +1,5 @@
+@import "../../styles/colors.scss";
+
 nav {
   position: relative;
   display: flex;
@@ -19,13 +21,13 @@ nav {
   display: flex;
   align-items: center;
   border: none;
-  background-color: #2f82ed !important;
+  background-color: $secondary-light !important;
   border-radius: 0.25rem;
   cursor: pointer;
   transition: 200ms ease-in-out;
 
   &:hover {
-    box-shadow: 2px 0px 4px 0px #2f80ed;
+    box-shadow: 2px 0px 4px 0px $secondary-light;
   }
 }
 
@@ -50,6 +52,7 @@ nav {
   display: flex;
   flex-direction: row;
   gap: 0.625rem;
+  flex-wrap: wrap;
 }
 
 .search-input-wrapper {

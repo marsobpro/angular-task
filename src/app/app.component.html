@@ -1,7 +1,7 @@
 <header class="header">
   <app-navbar
-    (search)="onSearchSubmit($event)"
-    (isSettingsOpen)="onSettingsClick($event)"
+    (searchQuery)="onSearchSubmit($event)"
+    (isSettingsPanelOpen)="onSettingsClick($event)"
   />
 </header>
 
@@ -9,7 +9,7 @@
   @if (searchString) {
   <app-search-results
     [searchString]="searchString"
-    [isSettingsOpen]="isSettingsOpen"
+    [isSettingsPanelOpen]="isSettingsPanelOpen"
   />
   }
 </main>

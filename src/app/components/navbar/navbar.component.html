@@ -2,9 +2,8 @@
   <div class="search-content-wrapper">
     <a href="/" class="button logo-button" mat-icon-button>
       <span class="material-icons icon logo-icon"> play_arrow </span>
-      <!-- <img src="assets/icons/logo.svg" alt="" /> -->
     </a>
-    <form class="form-container" (ngSubmit)="onSubmit()" name="searchForm">
+    <form class="form-container" (ngSubmit)="onSubmit()" aria-label="Search Form">
       <div class="search-input-wrapper">
         <input
           type="text"
@@ -12,10 +11,11 @@
           matInput
           placeholder="What do you want to find out?"
           [(ngModel)]="searchString"
+          aria-label="Search input field"
         />
-        <button mat-flat-button class="button">search</button>
+        <button mat-flat-button class="button" aria-label="Search">search</button>
       </div>
-      <button class="button settings-button" (click)="onSettingsClick()">
+      <button class="button settings-button" (click)="onSettingsClick()" type="button" aria-label="Open settings">
         <span class="material-icons icon"> tune </span>
       </button>
     </form>
@@ -23,7 +23,7 @@
 
   <div class="user-data-wrapper">
     <p class="user-name">Your name</p>
-    <a href="" class="button">
+    <a href="/" class="button" aria-label="Go to user profile">
       <span class="material-icons icon"> account_circle </span>
     </a>
   </div>

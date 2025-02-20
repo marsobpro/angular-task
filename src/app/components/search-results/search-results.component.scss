@@ -1,3 +1,5 @@
+@import "../../styles/colors.scss";
+
 .results-wrapper {
   margin-top: 2rem;
   margin-inline: 6rem;
@@ -16,16 +18,16 @@ mat-card {
   height: 327px;
   border-bottom: 4px solid;
   &.red {
-    border-bottom-color: #f7322f;
+    border-bottom-color: $red;
   }
   &.yellow {
-    border-bottom-color: #ffaf2e;
+    border-bottom-color: $yellow;
   }
   &.green {
-    border-bottom-color: #00d169;
+    border-bottom-color: $green;
   }
   &.blue {
-    border-bottom-color: #00a6ed;
+    border-bottom-color: $blue;
   }
 }
 

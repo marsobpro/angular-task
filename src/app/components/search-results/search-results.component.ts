@@ -29,7 +29,7 @@ import { UploadAgeDirective } from '../../directives/upload-age-directive/upload
 })
 export class SearchResultsComponent implements OnChanges {
   @Input() searchString = '';
-  @Input() isSettingsOpen!: boolean;
+  @Input() isSettingsPanelOpen!: boolean;
   @Input() filterCriterion: SearchCriterion = {
     name: '',
     value: '',
@@ -57,7 +57,7 @@ export class SearchResultsComponent implements OnChanges {
   }
 
   onWordOrSentenceSearch(searchString: string) {
-    this.searchString = searchString; // Update search string
+    this.searchString = searchString;
     this.updateSearchResults();
   }
 }
