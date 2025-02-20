@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
-// import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { NavbarComponent } from './navbar/navbar.component';
-import { SearchResultsComponent } from './search-results/search-results.component';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    MatSlideToggleModule,
-    NavbarComponent,
-    NavbarComponent,
-    SearchResultsComponent,
-  ],
+  imports: [ NavbarComponent, SearchResultsComponent, MatSlideToggleModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

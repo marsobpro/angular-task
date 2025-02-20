@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SearchCriterion } from './search-results.types';
 
 @Injectable({ providedIn: 'root' })
 export class SearchResultsService {
@@ -762,22 +763,37 @@ export class SearchResultsService {
     },
   ];
 
-  getSearchResults(searchString: string, filterCriterion: string) {
+  getSearchResults(searchString: string, filterCriterion: SearchCriterion) {
     let results = this.mockedSearchData.filter((item) =>
       item.snippet.title.toLowerCase().includes(searchString.toLowerCase())
     );
 
-    if (filterCriterion === 'views') {
-      results = results.sort(
-        (a, b) =>
-          Number(b.statistics.viewCount) - Number(a.statistics.viewCount)
-      );
-    } else if (filterCriterion === 'date') {
-      results = results.sort(
-        (a, b) =>
-          new Date(b.snippet.publishedAt).getTime() -
-          new Date(a.snippet.publishedAt).getTime()
-      );
+    if (filterCriterion.value === 'views') {
+      if (filterCriterion.direction === 'asc') {
+        results = results.sort(
+          (a, b) =>
+            Number(b.statistics.viewCount) - Number(a.statistics.viewCount)
+        );
+      } else {
+        results = results.sort(
+          (a, b) =>
+            Number(a.statistics.viewCount) - Number(b.statistics.viewCount)
+        );
+      }
+    } else if (filterCriterion.value === 'date') {
+      if (filterCriterion.direction === 'asc') {
+        results = results.sort(
+          (a, b) =>
+            new Date(b.snippet.publishedAt).getTime() -
+            new Date(a.snippet.publishedAt).getTime()
+        );
+      } else {
+        results = results.sort(
+          (a, b) =>
+            new Date(a.snippet.publishedAt).getTime() -
+            new Date(b.snippet.publishedAt).getTime()
+        );
+      }
     }
 
     return results;

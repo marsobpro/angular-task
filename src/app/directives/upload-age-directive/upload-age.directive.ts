@@ -6,7 +6,8 @@ import { Directive, ElementRef, Input } from '@angular/core';
 })
 export class UploadAgeDirective {
   @Input() publishedAt = '';
-
+  monthDaysCount = 30;
+  weekDaysCount = 7;
   constructor(private el: ElementRef) {}
 
   ngOnChanges(): void {

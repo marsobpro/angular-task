@@ -5,7 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../shared/button/button.component';
-import { UploadAgeDirective } from '../directives/upload-age-directive/upload-age.directive';
+import { SearchCriterion } from './search-results.types';
+import { UploadAgeDirective } from '../../directives/upload-age-directive/upload-age.directive';
 
 @Component({
   selector: 'app-search-results',
@@ -23,7 +24,7 @@ import { UploadAgeDirective } from '../directives/upload-age-directive/upload-ag
 export class SearchResultsComponent {
   @Input() searchString = '';
   @Input() isSettingsOpen!: boolean;
-  filterCriterion = '';
+  filterCriterion: SearchCriterion = { name: '', value: '', direction: 'none' };
   private searchResultsService = inject(SearchResultsService);
 
   get searchResults() {
@@ -33,7 +34,7 @@ export class SearchResultsComponent {
     );
   }
 
-  handleFilterCriterionChange(criterion: string) {
+  handleFilterCriterionChange(criterion: SearchCriterion) {
     this.filterCriterion = criterion;
   }
 }
