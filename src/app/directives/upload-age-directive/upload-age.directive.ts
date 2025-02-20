@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input } from '@angular/core';
+import { TimePeriodDays } from '../../shared/enums/time-period-in-days.enum';
 
 @Directive({
   selector: '[appUploadAge]',
@@ -6,8 +7,7 @@ import { Directive, ElementRef, Input } from '@angular/core';
 })
 export class UploadAgeDirective {
   @Input() publishedAt = '';
-  monthDaysCount = 30;
-  weekDaysCount = 7;
+
   constructor(private el: ElementRef) {}
 
   ngOnChanges(): void {
@@ -20,11 +20,17 @@ export class UploadAgeDirective {
     const dateDifference = currentDate.getTime() - new Date(date).getTime();
     const differenceInDays = dateDifference / (1000 * 3600 * 24);
 
-    if (differenceInDays > 180) {
+    if (differenceInDays > TimePeriodDays.HalfYear) {
       return 'red';
-    } else if (differenceInDays >= 30 && differenceInDays <= 180) {
+    } else if (
+      differenceInDays >= TimePeriodDays.Month &&
+      differenceInDays <= TimePeriodDays.HalfYear
+    ) {
       return 'yellow';
-    } else if (differenceInDays >= 7 && differenceInDays <= 30) {
+    } else if (
+      differenceInDays >= TimePeriodDays.Week &&
+      differenceInDays <= TimePeriodDays.Month
+    ) {
       return 'green';
     } else {
       return 'blue';

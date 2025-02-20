@@ -14,7 +14,7 @@
 
   @if(item.showInput) {
   <div class="search-input-wrapper">
-    <input type="text" name="search" matInput [(ngModel)]="searchString" />
+    <input class="by-words-or-sentence-input" type="text" name="search" matInput [(ngModel)]="searchString" (ngModelChange)="onSearch()" />
   </div>
   } }
 </div>

@@ -764,11 +764,14 @@ export class SearchResultsService {
   ];
 
   getSearchResults(searchString: string, filterCriterion: SearchCriterion) {
+    console.log('Inside getsearchresults');
     let results = this.mockedSearchData.filter((item) =>
       item.snippet.title.toLowerCase().includes(searchString.toLowerCase())
     );
 
+    // By views
     if (filterCriterion.value === 'views') {
+      console.log('VIEWS', filterCriterion.value);
       if (filterCriterion.direction === 'asc') {
         results = results.sort(
           (a, b) =>
@@ -780,6 +783,8 @@ export class SearchResultsService {
             Number(a.statistics.viewCount) - Number(b.statistics.viewCount)
         );
       }
+
+      // By date
     } else if (filterCriterion.value === 'date') {
       if (filterCriterion.direction === 'asc') {
         results = results.sort(

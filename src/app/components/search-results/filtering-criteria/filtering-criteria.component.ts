@@ -27,10 +27,12 @@ export class FilteringCriteriaComponent {
   handleCriterionClick(selectedCriterion: SearchCriterion) {
     this.searchCriteria = this.searchCriteria.map((criterion) => {
       if (criterion.value === selectedCriterion.value) {
+        // Show input for word or sentence and return
         if (selectedCriterion.value === 'wordOrSentence') {
           return { ...criterion, showInput: !criterion.showInput };
         }
 
+        // Handle date and views filters
         let newDirection: 'asc' | 'desc';
         if (selectedCriterion.direction === 'none') {
           newDirection = 'asc';
@@ -42,5 +44,9 @@ export class FilteringCriteriaComponent {
       }
       return criterion;
     });
+  }
+
+  onSearch() {
+    this.search.emit(this.searchString);
   }
 }

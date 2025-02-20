@@ -2,9 +2,10 @@
   <app-filtering-criteria
     [isSettingsOpen]="isSettingsOpen"
     (filterCriterion)="handleFilterCriterionChange($event)"
+    (search)="onWordOrSentenceSearch($event)"
   />
   <div class="cards">
-    @for(item of searchResults ; track item.id) {
+    @for(item of filteredResultsArray ; track item.id) {
     <mat-card
       appearance="outlined"
       appUploadAge

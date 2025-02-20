@@ -1,4 +1,10 @@
-import { Component, inject, Input } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { FilteringCriteriaComponent } from './filtering-criteria/filtering-criteria.component';
 import { SearchResultsService } from './search-results.service';
 import { MatCardModule } from '@angular/material/card';
@@ -19,16 +25,27 @@ import { UploadAgeDirective } from '../../directives/upload-age-directive/upload
     UploadAgeDirective,
   ],
   templateUrl: './search-results.component.html',
-  styleUrl: './search-results.component.scss',
+  styleUrls: ['./search-results.component.scss'],
 })
-export class SearchResultsComponent {
+export class SearchResultsComponent implements OnChanges {
   @Input() searchString = '';
   @Input() isSettingsOpen!: boolean;
-  filterCriterion: SearchCriterion = { name: '', value: '', direction: 'none' };
+  @Input() filterCriterion: SearchCriterion = {
+    name: '',
+    value: '',
+    direction: 'none',
+  };
   private searchResultsService = inject(SearchResultsService);
+  filteredResultsArray: any[] = [];
 
-  get searchResults() {
-    return this.searchResultsService.getSearchResults(
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['searchString'] || changes['filterCriterion']) {
+      this.updateSearchResults();
+    }
+  }
+
+  private updateSearchResults() {
+    this.filteredResultsArray = this.searchResultsService.getSearchResults(
       this.searchString,
       this.filterCriterion
     );
@@ -36,5 +53,11 @@ export class SearchResultsComponent {
 
   handleFilterCriterionChange(criterion: SearchCriterion) {
     this.filterCriterion = criterion;
+    this.updateSearchResults();
+  }
+
+  onWordOrSentenceSearch(searchString: string) {
+    this.searchString = searchString; // Update search string
+    this.updateSearchResults();
   }
 }
