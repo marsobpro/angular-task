@@ -3,7 +3,7 @@ import { TimePeriodDays } from '../../shared/enums/time-period-in-days.enum';
 
 @Directive({
   selector: '[appUploadAge]',
-  standalone: true,
+  standalone: false,
 })
 export class UploadAgeDirective {
   @Input() publishedAt = '';
