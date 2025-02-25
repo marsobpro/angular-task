@@ -101,7 +101,7 @@ export class SearchResultsComponent implements OnChanges, OnDestroy {
   };
   private searchResultsService = inject(SearchResultsService);
   filteredResultsArray: any[] = [];
-  isSettingsPanelOpen = false; // Initialize as boolean
+  isSettingsPanelOpen = false;
   private subscription: Subscription | undefined;
 
   constructor(private route: ActivatedRoute) {}
@@ -110,31 +110,26 @@ export class SearchResultsComponent implements OnChanges, OnDestroy {
     console.log('RESULTS INITIALIZED');
     this.subscription =
       this.searchResultsService.isSettingsPanelOpen$.subscribe((open) => {
-        this.isSettingsPanelOpen = open; // Update local variable
+        this.isSettingsPanelOpen = open;
       });
 
     this.route.queryParams.subscribe((params) => {
       this.searchQuery = params['search_query'];
-      console.log('Received search query:', this.searchQuery);
       this.updateSearchResults();
     });
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe(); // Clean up subscription
+    this.subscription?.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('RESULTS INITIALIZED');
-
     if (changes['filterCriterion']) {
-      console.log('IN FIRST IF');
       this.updateSearchResults();
     }
   }
 
   private updateSearchResults() {
-    console.log('IN UPDATE SEARCH RESULTS');
     this.filteredResultsArray = this.searchResultsService.getSearchResults(
       this.searchQuery,
       this.filterCriterion
