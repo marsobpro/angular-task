@@ -9,11 +9,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   // title = 'youtube-app';
   // searchString = '';
-  // isSettingsPanelOpen = false;
+  isSettingsPanelOpen = false;
   // onSearchSubmit(data: string) {
   //   this.searchString = data;
   // }
-  // onSettingsClick(isOpen: boolean) {
-  //   this.isSettingsPanelOpen = isOpen;
-  // }
+  onSettingsClick(isOpen: boolean) {
+    this.isSettingsPanelOpen = isOpen;
+  }
 }

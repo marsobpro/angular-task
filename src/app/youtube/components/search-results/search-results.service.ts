@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SearchCriterion } from './search-results.types';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SearchResultsService {
@@ -762,7 +763,17 @@ export class SearchResultsService {
       },
     },
   ];
+  private isSettingsPanelOpenSubject = new BehaviorSubject(false);
+  isSettingsPanelOpen$ = this.isSettingsPanelOpenSubject.asObservable();
 
+  toggleIsSettingsPanelOpen() {
+    const currentState = this.isSettingsPanelOpenSubject.getValue();
+    this.isSettingsPanelOpenSubject.next(!currentState);
+  }
+
+  setIsSettingsPanelOpen(open: boolean) {
+    this.isSettingsPanelOpenSubject.next(open);
+  }
   getSearchResults(searchString: string, filterCriterion: SearchCriterion) {
     console.log('Search results service');
     console.log(

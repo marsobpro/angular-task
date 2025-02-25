@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { SearchResultsService } from '../../../youtube/components/search-results/search-results.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,13 +9,15 @@ import { Router } from '@angular/router';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  @Output() searchQuery = new EventEmitter();
   @Output() isSettingsPanelOpen = new EventEmitter();
 
   isSortingOpen = false;
   searchString = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private searchResultsService: SearchResultsService
+  ) {}
 
   onSubmit() {
     this.router.navigate(['/results'], {
@@ -23,7 +26,6 @@ export class NavbarComponent {
   }
 
   onSettingsClick() {
-    this.isSortingOpen = !this.isSortingOpen;
-    this.isSettingsPanelOpen.emit(this.isSortingOpen);
+    this.searchResultsService.toggleIsSettingsPanelOpen();
   }
 }
