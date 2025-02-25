@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SearchCriterion } from '../search-results.types';
+import { SearchCriterion } from '../search-results/search-results.types';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-filtering-criteria',
-  imports: [FormsModule],
+  standalone: false,
   templateUrl: './filtering-criteria.component.html',
   styleUrl: './filtering-criteria.component.scss',
 })

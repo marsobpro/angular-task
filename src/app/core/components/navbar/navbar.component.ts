@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,8 +14,12 @@ export class NavbarComponent {
   isSortingOpen = false;
   searchString = '';
 
+  constructor(private router: Router) {}
+
   onSubmit() {
-    this.searchQuery.emit(this.searchString);
+    this.router.navigate(['/results'], {
+      queryParams: { search_query: this.searchString },
+    });
   }
 
   onSettingsClick() {

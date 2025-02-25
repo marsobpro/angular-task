@@ -764,9 +764,26 @@ export class SearchResultsService {
   ];
 
   getSearchResults(searchString: string, filterCriterion: SearchCriterion) {
-    let results = this.mockedSearchData.filter((item) =>
-      item.snippet.title.toLowerCase().includes(searchString.toLowerCase())
+    console.log('Search results service');
+    console.log(
+      'searchString:',
+      searchString,
+      'filterCriterion',
+      filterCriterion
     );
+
+    let results = this.mockedSearchData.filter((item) => {
+      console.log('ITEM', item.snippet.title);
+      console.log('SEARCH STRING', searchString);
+      return item.snippet.title
+        .toLowerCase()
+        .includes(searchString.toLowerCase());
+    });
+    console.log('RESULTS', results);
+
+    if (!filterCriterion) {
+      return results;
+    }
 
     // By views
     if (filterCriterion.value === 'views') {

@@ -1,9 +1,9 @@
 import { Directive, ElementRef, Input } from '@angular/core';
-import { TimePeriodDays } from '../../shared/enums/time-period-in-days.enum';
+import { TimePeriodDays } from '../../../shared/enums/time-period-in-days.enum';
 
 @Directive({
   selector: '[appUploadAge]',
-  standalone: false,
+  standalone: true,
 })
 export class UploadAgeDirective {
   @Input() publishedAt = '';
