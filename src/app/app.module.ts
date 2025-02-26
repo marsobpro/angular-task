@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterOutlet } from '@angular/router';
 import { YoutubeModule } from './youtube/youtube.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { YoutubeModule } from './youtube/youtube.module';
     CoreModule,
     AppRoutingModule,
     RouterOutlet,
+    CommonModule,
   ],
   bootstrap: [AppComponent],
 })

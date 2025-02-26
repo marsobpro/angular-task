@@ -1,10 +1,19 @@
 import { Routes } from '@angular/router';
-import { SearchResultsComponent } from './youtube/components/search-results/search-results.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { AppComponent } from './app.component';
 
 export const routes: Routes = [
   {
+    path: '',
+    component: AppComponent,
+  },
+  {
     path: 'results',
+    loadChildren: () =>
+      import('./youtube/youtube.module').then((m) => m.YoutubeModule),
+  },
+  {
+    path: 'details',
     loadChildren: () =>
       import('./youtube/youtube.module').then((m) => m.YoutubeModule),
   },
