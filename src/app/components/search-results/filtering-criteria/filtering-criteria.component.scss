@@ -1,0 +1,35 @@
+@import "../../../styles/colors.scss";
+
+.content-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-inline: auto;
+  align-items: center;
+}
+
+.sorting-header,
+.criterion {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.sorting-header {
+  color: #929292;
+}
+
+.criterion {
+  color: $blue;
+  text-decoration: underline;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  transition: 200ms all;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.by-words-or-sentence-input {
+  border: 1px solid black;
+}

@@ -1,0 +1,50 @@
+<div class="results-wrapper">
+  <app-filtering-criteria
+    [isSettingsOpen]="isSettingsPanelOpen"
+    (filterCriterion)="handleFilterCriterionChange($event)"
+    (search)="onWordOrSentenceSearch($event)"
+  />
+  <div class="cards">
+    @for(item of filteredResultsArray ; track item.id) {
+    <mat-card
+      appearance="outlined"
+      appUploadAge
+      [publishedAt]="item.snippet.publishedAt"
+    >
+      <mat-card-header>
+        <img
+          mat-card-image
+          [src]="item.snippet.thumbnails.medium.url"
+          alt="Photo of a Shiba Inu"
+        />
+      </mat-card-header>
+
+      <mat-card-actions>
+        <div class="stat-container">
+          <i class="material-icons"> visibility </i>
+          <p>{{ item.statistics.viewCount }}</p>
+        </div>
+        <div class="stat-container">
+          <i class="material-icons"> thumb_up </i>
+          <p>{{ item.statistics.likeCount }}</p>
+        </div>
+        <div class="stat-container">
+          <i class="material-icons"> thumb_down </i>
+          <p>{{ item.statistics.dislikeCount }}</p>
+        </div>
+        <div class="stat-container">
+          <i class="material-icons"> chat </i>
+          <p>{{ item.statistics.commentCount }}</p>
+        </div>
+      </mat-card-actions>
+
+      <mat-card-content>
+        <p>
+          {{ item.snippet.title }}
+        </p>
+        <app-button>more...</app-button>
+      </mat-card-content>
+    </mat-card>
+    }
+  </div>
+</div>

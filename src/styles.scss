@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/modern-normalize/modern-normalize.css";
+@import "./app/styles/colors.scss";
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 20px;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: $background-light;
+}
+
+a {
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: inherit;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $scrollbar-light;
+  border-radius: 3px;
+}
