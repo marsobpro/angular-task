@@ -1,15 +1,6 @@
 <header class="header">
-  <app-navbar
-    (searchQuery)="onSearchSubmit($event)"
-    (isSettingsPanelOpen)="onSettingsClick($event)"
-  />
+  <app-navbar (isSettingsPanelOpen)="onSettingsClick($event)" />
 </header>
-
 <main class="main">
-  @if (searchString) {
-  <app-search-results
-    [searchString]="searchString"
-    [isSettingsPanelOpen]="isSettingsPanelOpen"
-  />
-  }
+  <router-outlet />
 </main>

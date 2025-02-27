@@ -1,0 +1,122 @@
+@import "../../../styles/colors.scss";
+
+.video-details-container {
+  position: relative;
+  width: 80%;
+  margin-inline: auto;
+  margin-top: 3rem;
+}
+
+.back-btn {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  top: 0.15rem;
+  left: -2.7rem;
+  position: absolute;
+  background-color: $secondary-light;
+  border-radius: 5px 0 0 5px;
+  cursor: pointer;
+  transition: all 150ms;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.arrow-icon {
+  font-size: 2rem !important;
+  color: $background-light;
+}
+
+.card {
+  overflow: hidden;
+  display: flex;
+  box-shadow: 5px 10px 10px 0px #2f80ed40;
+  border-radius: 5px !important;
+}
+
+.thumbnail-wrapper {
+  flex: 3;
+  & > img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.details-wrapper {
+  padding: 2rem;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  &.red,
+  &.yellow,
+  &.green,
+  &.blue {
+    border-bottom: 5px solid;
+  }
+  &.red {
+    border-bottom-color: $red;
+  }
+  &.yellow {
+    border-bottom-color: $yellow;
+  }
+  &.green {
+    border-bottom-color: $green;
+  }
+  &.blue {
+    border-bottom-color: $blue;
+  }
+}
+
+.title-upload-date-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.title {
+  font-family: Roboto;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 28.13px;
+}
+
+.upload-date {
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 0.6rem;
+  line-height: 11.72px;
+  text-align: right;
+  color: $text-secondary !important;
+}
+
+.description {
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 14.06px;
+  color: $text-secondary !important;
+}
+
+.stats-container {
+  margin-top: auto;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-inline: auto;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 0.6rem;
+  line-height: 11.72px;
+}
+
+.material-icons {
+  font-size: 1rem;
+}

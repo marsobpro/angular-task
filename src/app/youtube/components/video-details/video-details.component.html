@@ -1,0 +1,47 @@
+<div class="video-details-container">
+  <button class="back-btn" (click)="goBack()" aria-label="Go back">
+    <span class="material-icons arrow-icon"> arrow_back </span>
+  </button>
+
+  <!-- Card (Could be moved to another component though) -->
+  <div class="card">
+    <div class="thumbnail-wrapper">
+      <img
+        [src]="videoDetails.snippet.thumbnails.maxres.url"
+        class="img"
+        alt="Video thumbnail"
+      />
+    </div>
+    <div
+      class="details-wrapper"
+      appUploadAge
+      [publishedAt]="videoDetails.snippet.publishedAt"
+    >
+      <div class="title-upload-date-container">
+        <h3 class="title">{{ videoDetails.snippet.title }}</h3>
+        <p class="upload-date">
+          {{ videoDetails.snippet.publishedAt | date : "EEEE, MMMM dd, YYYY" }}
+        </p>
+      </div>
+      <p class="description">{{ videoDetails.snippet.description }}</p>
+      <div class="stats-container">
+        <div class="stat">
+          <span class="material-icons"> visibility </span
+          >{{ videoDetails.statistics.viewCount }}
+        </div>
+        <div class="stat">
+          <span class="material-icons"> thumb_up </span>
+          {{ videoDetails.statistics.likeCount }}
+        </div>
+        <div class="stat">
+          <span class="material-icons"> thumb_down </span>
+          {{ videoDetails.statistics.dislikeCount }}
+        </div>
+        <div class="stat">
+          <span class="material-icons"> content_copy </span>
+          {{ videoDetails.statistics.commentCount }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
