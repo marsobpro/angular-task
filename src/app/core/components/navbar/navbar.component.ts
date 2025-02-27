@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchResultsService } from '../../../youtube/components/search-results/search-results.service';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,8 @@ export class NavbarComponent {
 
   isSortingOpen = false;
   searchString = '';
+
+  authService = inject(AuthService);
 
   constructor(
     private router: Router,
@@ -27,5 +30,9 @@ export class NavbarComponent {
 
   onSettingsClick() {
     this.searchResultsService.toggleIsSettingsPanelOpen();
+  }
+
+  onLogout() {
+    this.authService.logout();
   }
 }

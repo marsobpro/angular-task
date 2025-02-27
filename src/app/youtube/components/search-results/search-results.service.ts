@@ -780,18 +780,25 @@ export class SearchResultsService {
   }
 
   getSearchResults(searchString: string, filterCriterion: SearchCriterion) {
-    // console.log(
-    //   'searchString:',
-    //   searchString,
-    //   'filterCriterion',
-    //   filterCriterion
-    // );
+    let results = [];
 
-    let results = this.mockedSearchData.filter((item) => {
-      return item.snippet.title
-        .toLowerCase()
-        .includes(searchString.toLowerCase());
-    });
+    if (!searchString && !filterCriterion) {
+      results = this.mockedSearchData;
+    }
+
+    if (!searchString) {
+      results = this.mockedSearchData;
+    } else {
+      results = this.mockedSearchData.filter((item) => {
+        if (item.snippet && item.snippet.title) {
+          return item.snippet.title
+            .toLowerCase()
+            .includes(searchString.toLowerCase());
+        }
+        return;
+      });
+    }
+
     console.log('RESULTS', results);
 
     if (!filterCriterion) {
@@ -814,6 +821,7 @@ export class SearchResultsService {
 
       // By date
     } else if (filterCriterion.value === 'date') {
+      console.log('BY DATE');
       if (filterCriterion.direction === 'asc') {
         results = results.sort(
           (a, b) =>

@@ -1,1 +1,10 @@
-<button mat-flat-button class="custom-button"><ng-content /></button>
+<button
+  mat-flat-button
+  type="{{ type }}"
+  class="custom-button"
+  [ngClass]="{
+    underlined: version === 'underlined'
+  }"
+>
+  <ng-content />
+</button>

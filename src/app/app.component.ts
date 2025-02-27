@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  // title = 'youtube-app';
-  // searchString = '';
   isSettingsPanelOpen = false;
-  // onSearchSubmit(data: string) {
-  //   this.searchString = data;
-  // }
+
+  constructor(private authService: AuthService, private router: Router) {}
+
   onSettingsClick(isOpen: boolean) {
     this.isSettingsPanelOpen = isOpen;
   }

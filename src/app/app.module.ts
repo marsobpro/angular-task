@@ -5,18 +5,20 @@ import { CoreModule } from './core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterOutlet } from '@angular/router';
-import { YoutubeModule } from './youtube/youtube.module';
 import { CommonModule } from '@angular/common';
-
+import { AuthModule } from './auth/auth.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     CoreModule,
     AppRoutingModule,
     RouterOutlet,
     CommonModule,
+    AuthModule,
   ],
   bootstrap: [AppComponent],
 })
