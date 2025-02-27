@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { SearchCriterion } from './search-results.types';
+import { SearchCriterion } from '../../models/search-results.model';
 import { BehaviorSubject } from 'rxjs';
+import { FilterValue, SortDirection } from '../../enums/results.enum';
 
 @Injectable({ providedIn: 'root' })
 export class SearchResultsService {
@@ -799,15 +800,13 @@ export class SearchResultsService {
       });
     }
 
-    console.log('RESULTS', results);
-
     if (!filterCriterion) {
       return results;
     }
 
     // By views
-    if (filterCriterion.value === 'views') {
-      if (filterCriterion.direction === 'asc') {
+    if (filterCriterion.value === FilterValue.Views) {
+      if (filterCriterion.direction === SortDirection.Ascending) {
         results = results.sort(
           (a, b) =>
             Number(b.statistics.viewCount) - Number(a.statistics.viewCount)
@@ -820,9 +819,8 @@ export class SearchResultsService {
       }
 
       // By date
-    } else if (filterCriterion.value === 'date') {
-      console.log('BY DATE');
-      if (filterCriterion.direction === 'asc') {
+    } else if (filterCriterion.value === FilterValue.Date) {
+      if (filterCriterion.direction === SortDirection.Ascending) {
         results = results.sort(
           (a, b) =>
             new Date(b.snippet.publishedAt).getTime() -

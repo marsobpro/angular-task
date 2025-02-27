@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SearchCriterion } from '../search-results/search-results.types';
-import { FormsModule } from '@angular/forms';
+import { SearchCriterion } from '../../models/search-results.model';
+import {
+  FilterValue,
+  SearchCriteriaName,
+  SortDirection,
+} from '../../enums/results.enum';
 
 @Component({
   selector: 'app-filtering-criteria',
@@ -14,35 +18,45 @@ export class FilteringCriteriaComponent {
   @Output() search = new EventEmitter<string>();
   searchString = '';
   searchCriteria: SearchCriterion[] = [
-    { name: 'date', value: 'date', direction: 'none' },
-    { name: 'count of views', value: 'views', direction: 'none' },
     {
-      name: 'by word or sentence',
-      value: 'wordOrSentence',
-      direction: 'none',
+      name: SearchCriteriaName.Date,
+      value: FilterValue.Date,
+      direction: SortDirection.None,
+    },
+    {
+      name: SearchCriteriaName.Views,
+      value: FilterValue.Views,
+      direction: SortDirection.None,
+    },
+    {
+      name: SearchCriteriaName.WordOrSentence,
+      value: FilterValue.WordOrSentence,
+      direction: SortDirection.None,
       showInput: false,
     },
   ];
 
   handleCriterionClick(selectedCriterion: SearchCriterion) {
     this.searchCriteria = this.searchCriteria.map((criterion) => {
-      if (criterion.value === selectedCriterion.value) {
-        // Show input for word or sentence and return
-        if (selectedCriterion.value === 'wordOrSentence') {
-          return { ...criterion, showInput: !criterion.showInput };
-        }
+      if (criterion.value !== selectedCriterion.value) return criterion;
 
-        // Handle date and views filters
-        let newDirection: 'asc' | 'desc';
-        if (selectedCriterion.direction === 'none') {
-          newDirection = 'asc';
-        } else {
-          newDirection = criterion.direction === 'asc' ? 'desc' : 'asc';
-        }
-        this.filterCriterion.emit(criterion);
-        return { ...criterion, direction: newDirection };
+      // Show input for word or sentence and return
+      if (selectedCriterion.value === FilterValue.WordOrSentence) {
+        return { ...criterion, showInput: !criterion.showInput };
       }
-      return criterion;
+
+      // Handle date and views filters
+      let newDirection: SortDirection.Ascending | SortDirection.Descending;
+      if (selectedCriterion.direction === SortDirection.None) {
+        newDirection = SortDirection.Ascending;
+      } else {
+        newDirection =
+          criterion.direction === SortDirection.Ascending
+            ? SortDirection.Descending
+            : SortDirection.Ascending;
+      }
+      this.filterCriterion.emit(criterion);
+      return { ...criterion, direction: newDirection };
     });
   }
 

@@ -7,10 +7,10 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { SearchResultsService } from './search-results.service';
-import { SearchCriterion } from './search-results.types';
-import { FilteringCriteriaComponent } from '../filtering-criteria/filtering-criteria.component';
+import { SearchCriterion } from '../../models/search-results.model';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { FilterValue, SortDirection } from '../../enums/results.enum';
 
 @Component({
   selector: 'app-search-results',
@@ -22,8 +22,8 @@ export class SearchResultsComponent implements OnChanges, OnDestroy {
   searchQuery = '';
   @Input() filterCriterion: SearchCriterion = {
     name: '',
-    value: '',
-    direction: 'none',
+    value: FilterValue.None,
+    direction: SortDirection.None,
   };
   private searchResultsService = inject(SearchResultsService);
   filteredResultsArray: any[] = [];
