@@ -1,13 +1,15 @@
 <div class="video-details-container">
-  <button class="back-btn" (click)="goBack()">
+  <button class="back-btn" (click)="goBack()" aria-label="Go back">
     <span class="material-icons arrow-icon"> arrow_back </span>
   </button>
+
+  <!-- Card (Could be moved to another component though) -->
   <div class="card">
     <div class="thumbnail-wrapper">
       <img
         [src]="videoDetails.snippet.thumbnails.maxres.url"
-        aria-hidden="true"
         class="img"
+        alt="Video thumbnail"
       />
     </div>
     <div

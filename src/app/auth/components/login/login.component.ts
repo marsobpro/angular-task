@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -10,7 +10,8 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
   login = '';
   password = '';
-  authService = inject(AuthService);
+
+  constructor(private authService: AuthService) {}
 
   onSubmit(): void {
     this.authService.login(this.login, this.password);

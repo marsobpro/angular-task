@@ -3,6 +3,8 @@
     <a href="/" class="button logo-button" mat-icon-button>
       <span class="material-icons icon logo-icon"> play_arrow </span>
     </a>
+
+    <!-- Search form -->
     <form
       class="form-container"
       (ngSubmit)="onSubmit()"
@@ -32,11 +34,14 @@
     </form>
   </div>
 
+  <!-- User data -->
   <div class="user-data-wrapper">
     <p class="user-name">Your name</p>
     <a href="/" class="button" aria-label="Go to user profile">
       <span class="material-icons icon"> account_circle </span>
     </a>
-    <button class="logout-button" (click)="onLogout()">Logout</button>
+    <button class="logout-button" (click)="onLogout()" aria-label="Logout">
+      Logout
+    </button>
   </div>
 </nav>

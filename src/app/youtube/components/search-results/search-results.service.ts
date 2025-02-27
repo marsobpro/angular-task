@@ -780,59 +780,50 @@ export class SearchResultsService {
     return this.mockedSearchData.find((video) => video.id === id);
   }
 
-  getSearchResults(searchString: string, filterCriterion: SearchCriterion) {
-    let results = [];
+  getSearchResults(
+    searchString: string = '',
+    filterCriterion: SearchCriterion
+  ) {
+    let results = this.mockedSearchData;
 
-    if (!searchString && !filterCriterion) {
-      results = this.mockedSearchData;
+    if (searchString) {
+      results = results.filter((item) =>
+        item.snippet?.title?.toLowerCase().includes(searchString.toLowerCase())
+      );
     }
 
-    if (!searchString) {
-      results = this.mockedSearchData;
-    } else {
-      results = this.mockedSearchData.filter((item) => {
-        if (item.snippet && item.snippet.title) {
-          return item.snippet.title
-            .toLowerCase()
-            .includes(searchString.toLowerCase());
-        }
-        return;
-      });
+    if (filterCriterion) {
+      results = this.sortResults(results, filterCriterion);
     }
 
-    if (!filterCriterion) {
-      return results;
+    return results;
+  }
+
+  private compareValues(a: number, b: number, direction: SortDirection) {
+    return direction === SortDirection.Ascending ? a - b : b - a;
+  }
+
+  private sortResults(results: any[], criterion: SearchCriterion) {
+    const { value, direction } = criterion;
+
+    if (value === FilterValue.Views) {
+      return results.sort((a, b) =>
+        this.compareValues(
+          a.statistics.viewCount,
+          b.statistics.viewCount,
+          direction
+        )
+      );
     }
 
-    // By views
-    if (filterCriterion.value === FilterValue.Views) {
-      if (filterCriterion.direction === SortDirection.Ascending) {
-        results = results.sort(
-          (a, b) =>
-            Number(b.statistics.viewCount) - Number(a.statistics.viewCount)
-        );
-      } else {
-        results = results.sort(
-          (a, b) =>
-            Number(a.statistics.viewCount) - Number(b.statistics.viewCount)
-        );
-      }
-
-      // By date
-    } else if (filterCriterion.value === FilterValue.Date) {
-      if (filterCriterion.direction === SortDirection.Ascending) {
-        results = results.sort(
-          (a, b) =>
-            new Date(b.snippet.publishedAt).getTime() -
-            new Date(a.snippet.publishedAt).getTime()
-        );
-      } else {
-        results = results.sort(
-          (a, b) =>
-            new Date(a.snippet.publishedAt).getTime() -
-            new Date(b.snippet.publishedAt).getTime()
-        );
-      }
+    if (value === FilterValue.Date) {
+      return results.sort((a, b) =>
+        this.compareValues(
+          new Date(a.snippet.publishedAt).getTime(),
+          new Date(b.snippet.publishedAt).getTime(),
+          direction
+        )
+      );
     }
 
     return results;

@@ -15,17 +15,18 @@ export class NavbarComponent {
   isSortingOpen = false;
   searchString = '';
 
-  authService = inject(AuthService);
-
   constructor(
     private router: Router,
-    private searchResultsService: SearchResultsService
+    private searchResultsService: SearchResultsService,
+    private authService: AuthService
   ) {}
 
   onSubmit() {
-    this.router.navigate(['/results'], {
-      queryParams: { search_query: this.searchString },
-    });
+    if (this.searchString.trim()) {
+      this.router.navigate(['/results'], {
+        queryParams: { search_query: this.searchString },
+      });
+    }
   }
 
   onSettingsClick() {

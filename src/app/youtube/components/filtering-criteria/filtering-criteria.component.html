@@ -1,6 +1,7 @@
 @if (isSettingsOpen) {
 <div class="content-wrapper">
   <h3 class="sorting-header">Sorting by:</h3>
+
   @for (item of searchCriteria; track item.value) {
   <button class="criterion" (click)="handleCriterionClick(item)">
     {{ item.name }}
@@ -14,7 +15,14 @@
 
   @if(item.showInput) {
   <div class="search-input-wrapper">
-    <input class="by-words-or-sentence-input" type="text" name="search" matInput [(ngModel)]="searchString" (ngModelChange)="onSearch()" />
+    <input
+      class="by-words-or-sentence-input"
+      type="text"
+      name="search"
+      matInput
+      [(ngModel)]="searchString"
+      (ngModelChange)="onSearch()"
+    />
   </div>
   } }
 </div>

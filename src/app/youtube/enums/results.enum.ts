@@ -16,3 +16,10 @@ export enum SearchCriteriaName {
   Views = 'views',
   WordOrSentence = 'wordOrSentence',
 }
+
+export enum CardColor {
+  Red = 'red',
+  Yellow = 'yellow',
+  Green = 'green',
+  Blue = 'blue',
+}

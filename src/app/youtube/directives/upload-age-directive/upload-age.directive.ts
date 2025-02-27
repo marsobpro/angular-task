@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 import { TimePeriodDays } from '../../../shared/enums/time-period-in-days.enum';
+import { CardColor } from '../../enums/results.enum';
 
 @Directive({
   selector: '[appUploadAge]',
@@ -18,22 +19,22 @@ export class UploadAgeDirective {
   getBorderColor(date: string) {
     const currentDate = new Date();
     const dateDifference = currentDate.getTime() - new Date(date).getTime();
-    const differenceInDays = dateDifference / (1000 * 3600 * 24);
+    const differenceInDays = dateDifference / (1000 * 3600 * 24); // Converting to days
 
     if (differenceInDays > TimePeriodDays.HalfYear) {
-      return 'red';
+      return CardColor.Red;
     } else if (
       differenceInDays >= TimePeriodDays.Month &&
       differenceInDays <= TimePeriodDays.HalfYear
     ) {
-      return 'yellow';
+      return CardColor.Yellow;
     } else if (
       differenceInDays >= TimePeriodDays.Week &&
       differenceInDays <= TimePeriodDays.Month
     ) {
-      return 'green';
+      return CardColor.Green;
     } else {
-      return 'blue';
+      return CardColor.Blue;
     }
   }
 }

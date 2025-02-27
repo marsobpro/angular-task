@@ -1,14 +1,11 @@
-import { Injectable, OnInit } from '@angular/core';
-import { UserData } from '../models/auth.model';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnInit {
+export class AuthService {
   constructor(private router: Router) {}
-
-  ngOnInit(): void {}
 
   login(login: string, password: string): void {
     const token = 'some-auth-token';
