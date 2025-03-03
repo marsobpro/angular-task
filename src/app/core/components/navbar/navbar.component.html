@@ -5,23 +5,16 @@
     </a>
 
     <!-- Search form -->
-    <form
-      class="form-container"
-      (ngSubmit)="onSubmit()"
-      aria-label="Search Form"
-    >
+    <form class="form-container" aria-label="Search Form">
       <div class="search-input-wrapper">
         <input
           type="text"
           name="search"
           matInput
           placeholder="What do you want to find out?"
-          [(ngModel)]="searchString"
+          (keyup)="onSearchChange($event)"
           aria-label="Search input field"
         />
-        <button mat-flat-button class="button" aria-label="Search">
-          search
-        </button>
       </div>
       <button
         class="button settings-button"

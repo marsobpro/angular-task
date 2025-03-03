@@ -1,5 +1,6 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, filter, Subject } from 'rxjs';
 import { SearchResultsService } from '../../../youtube/components/search-results/search-results.service';
 import { AuthService } from '../../../auth/services/auth.service';
 
@@ -9,11 +10,11 @@ import { AuthService } from '../../../auth/services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   @Output() isSettingsPanelOpen = new EventEmitter();
 
   isSortingOpen = false;
-  searchString = '';
+  searchStringSubject = new Subject<string>();
 
   constructor(
     private router: Router,
@@ -21,10 +22,28 @@ export class NavbarComponent {
     private authService: AuthService
   ) {}
 
-  onSubmit() {
-    if (this.searchString.trim()) {
+  ngOnInit(): void {
+    this.searchStringSubject
+      .pipe(
+        debounceTime(300),
+        filter((value) => value.length > 3),
+        distinctUntilChanged()
+      )
+      .subscribe((value) => this.performSearch(value));
+  }
+
+  onSearchChange(event: KeyboardEvent) {
+    if (!event) return;
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+
+    this.searchStringSubject.next(value);
+  }
+
+  performSearch(value: any) {
+    if (value.trim()) {
       this.router.navigate(['/results'], {
-        queryParams: { search_query: this.searchString },
+        queryParams: { search_query: value },
       });
     }
   }
