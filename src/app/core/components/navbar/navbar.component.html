@@ -33,8 +33,14 @@
     <a href="/" class="button" aria-label="Go to user profile">
       <span class="material-icons icon"> account_circle </span>
     </a>
+    @if (isLoggedIn) {
     <button class="logout-button" (click)="onLogout()" aria-label="Logout">
       Logout
     </button>
+    } @else {
+    <button class="logout-button" routerLink="/login" aria-label="Login">
+      Login
+    </button>
+    }
   </div>
 </nav>

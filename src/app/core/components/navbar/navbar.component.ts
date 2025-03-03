@@ -15,12 +15,17 @@ export class NavbarComponent implements OnInit {
 
   isSortingOpen = false;
   searchStringSubject = new Subject<string>();
+  isLoggedIn = false;
 
   constructor(
     private router: Router,
     private searchResultsService: SearchResultsService,
     private authService: AuthService
-  ) {}
+  ) {
+    this.authService.data$.subscribe((value) => {
+      this.isLoggedIn = value;
+    });
+  }
 
   ngOnInit(): void {
     this.searchStringSubject
