@@ -12,9 +12,9 @@ export enum SortDirection {
 }
 
 export enum SearchCriteriaName {
-  Date = 'date',
-  Views = 'views',
-  WordOrSentence = 'wordOrSentence',
+  Date = 'Date',
+  Views = 'Views',
+  WordOrSentence = 'Word or Sentence',
 }
 
 export enum CardColor {

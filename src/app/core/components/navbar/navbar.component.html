@@ -12,8 +12,9 @@
           name="search"
           matInput
           placeholder="What do you want to find out?"
-          (keyup)="onSearchChange($event)"
+          (keyup)="onSearchChange(searchInput.value)"
           aria-label="Search input field"
+          #searchInput
         />
       </div>
       <button
@@ -33,7 +34,7 @@
     <a href="/" class="button" aria-label="Go to user profile">
       <span class="material-icons icon"> account_circle </span>
     </a>
-    @if (isLoggedIn) {
+    @if (this.authService.data$ | async) {
     <button class="logout-button" (click)="onLogout()" aria-label="Logout">
       Logout
     </button>

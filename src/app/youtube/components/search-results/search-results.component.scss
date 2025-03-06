@@ -41,6 +41,7 @@ mat-card-actions {
   padding-inline: 1rem;
   display: flex;
   justify-content: space-between;
+  color: $text-primary;
 }
 
 .stat-container {
@@ -73,6 +74,7 @@ mat-card-content {
 
   p {
     margin-top: 0;
+    color: $text-primary;
   }
 }
 
