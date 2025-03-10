@@ -1,9 +1,16 @@
-import { Component, inject, Input, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  OnDestroy,
+} from '@angular/core';
 import { SearchResultsService } from './search-results.service';
 import { SearchCriterion } from '../../models/search-results.model';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, NEVER, Subscription, switchMap } from 'rxjs';
 import { FilterValue, SortDirection } from '../../enums/results.enum';
+import { SearchParams } from '../../enums/search-queries.enum';
 
 @Component({
   selector: 'app-search-results',
@@ -19,12 +26,17 @@ export class SearchResultsComponent implements OnDestroy {
     direction: SortDirection.None,
   };
   private searchResultsService = inject(SearchResultsService);
-  filteredResultsArray: any;
-  isSettingsPanelOpen = false;
   private subscription: Subscription | undefined;
+
+  filteredResultsArray: any;
   originalResultsArray: any;
 
-  constructor(private route: ActivatedRoute) {}
+  isSettingsPanelOpen = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.subscription =
@@ -33,7 +45,7 @@ export class SearchResultsComponent implements OnDestroy {
       });
 
     this.route.queryParams.subscribe((params) => {
-      this.searchQuery = params['search_query'];
+      this.searchQuery = params[SearchParams.SEARCH_QUERY];
       this.updateSearchResults();
     });
   }
@@ -58,15 +70,14 @@ export class SearchResultsComponent implements OnDestroy {
           return NEVER;
         })
       )
-      .subscribe((data: any) => (this.filteredResultsArray = data.items));
+      .subscribe((data: any) => {
+        return (this.filteredResultsArray = data.items);
+      });
   }
 
   handleFilterCriterionChange(criterion: SearchCriterion) {
     this.filterCriterion = criterion;
-    return this.searchResultsService.getFilteredResults(
-      criterion,
-      this.filteredResultsArray
-    );
+    this.cdRef.detectChanges();
   }
 
   onWordOrSentenceSearch(searchString: string) {

@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  SearchCriterion,
-  YouTubeSearchResponse,
-} from '../../models/search-results.model';
+import { YouTubeSearchResponse } from '../../models/search-results.model';
 import { BehaviorSubject, map } from 'rxjs';
-import { FilterValue, SortDirection } from '../../enums/results.enum';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
@@ -13,7 +9,7 @@ export class SearchResultsService {
   isSettingsPanelOpen$ = this.isSettingsPanelOpenSubject.asObservable();
   private maxResults = 10;
   private apiKey = 'AIzaSyBriZ8PjXKBYpARj6ShgGoBicsPzR1qSII';
-  videosFound: any;
+  videosFound!: YouTubeSearchResponse;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -44,39 +40,6 @@ export class SearchResultsService {
         return data;
       })
     );
-  }
-
-  getFilteredResults(searchCriterion: SearchCriterion, videosFound: any) {
-    return this.sortResults(videosFound, searchCriterion);
-  }
-
-  private compareValues(a: number, b: number, direction: SortDirection) {
-    return direction === SortDirection.Ascending ? a - b : b - a;
-  }
-
-  private sortResults(results: any[], criterion: SearchCriterion) {
-    const { value, direction } = criterion;
-    if (value === FilterValue.Views) {
-      return results.sort((a, b) =>
-        this.compareValues(
-          a.statistics.viewCount,
-          b.statistics.viewCount,
-          direction
-        )
-      );
-    }
-
-    if (value === FilterValue.Date) {
-      return results.sort((a, b) =>
-        this.compareValues(
-          new Date(a.snippet.publishedAt).getTime(),
-          new Date(b.snippet.publishedAt).getTime(),
-          direction
-        )
-      );
-    }
-
-    return results;
   }
 
   private fetchVideos(url: string) {

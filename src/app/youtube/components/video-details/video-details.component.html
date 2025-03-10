@@ -7,7 +7,7 @@
   <div class="card">
     <div class="thumbnail-wrapper">
       <img
-        [src]="videoDetails?.snippet.thumbnails.high.url"
+        [src]="videoDetails?.snippet?.thumbnails?.high?.url"
         class="img"
         alt="Video thumbnail"
       />
@@ -15,7 +15,7 @@
     <div
       class="details-wrapper"
       appUploadAge
-      [publishedAt]="videoDetails?.snippet.publishedAt"
+      [publishedAt]="videoDetails?.snippet?.publishedAt"
     >
       <div class="title-upload-date-container">
         <h3 class="title">{{ videoDetails?.snippet.title }}</h3>

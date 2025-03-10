@@ -7,7 +7,7 @@ import { CardColor } from '../../enums/results.enum';
   standalone: true,
 })
 export class UploadAgeDirective {
-  @Input() publishedAt = '';
+  @Input() publishedAt = '' ;
 
   constructor(private el: ElementRef) {}
 

@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
+import { SortResultsPipe } from './youtube/pipes/sort-results.pipe';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -20,6 +21,7 @@ import { provideHttpClient } from '@angular/common/http';
     RouterOutlet,
     CommonModule,
     AuthModule,
+    SortResultsPipe,
   ],
 
   providers: [provideHttpClient()],
