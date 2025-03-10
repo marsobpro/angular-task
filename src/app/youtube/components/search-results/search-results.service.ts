@@ -1,9 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   SearchCriterion,
   YouTubeSearchResponse,
 } from '../../models/search-results.model';
-import { BehaviorSubject, map, tap } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { FilterValue, SortDirection } from '../../enums/results.enum';
 import { HttpClient } from '@angular/common/http';
 
@@ -25,16 +25,6 @@ export class SearchResultsService {
   setIsSettingsPanelOpen(open: boolean) {
     this.isSettingsPanelOpenSubject.next(open);
   }
-
-  // getVideo(id: string) {
-  //   return this.videosFound.find((video) => video.id === id);
-  // }
-  // getVideoStatistics(videoIds: string[]) {
-  //   const url = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds.join(
-  //     ','
-  //   )}&key=${this.apiKey}`;
-  //   return this.httpClient.get(url);
-  // }
 
   getVideoDetails(videoIds: string[]) {
     const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=${videoIds.join(

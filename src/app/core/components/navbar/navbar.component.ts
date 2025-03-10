@@ -6,13 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  Subject,
-  takeUntil,
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, Subject } from 'rxjs';
 import { SearchResultsService } from '../../../youtube/components/search-results/search-results.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -57,7 +51,7 @@ export class NavbarComponent implements OnInit {
     this.searchStringSubject.next(event);
   }
 
-  performSearch(value: any) {
+  performSearch(value: string) {
     if (value.trim()) {
       this.router.navigate(['/results'], {
         queryParams: { search_query: value },

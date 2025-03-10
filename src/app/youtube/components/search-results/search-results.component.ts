@@ -1,18 +1,8 @@
-import {
-  Component,
-  inject,
-  Input,
-  OnChanges,
-  OnDestroy,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, inject, Input, OnDestroy } from '@angular/core';
 import { SearchResultsService } from './search-results.service';
-import {
-  SearchCriterion,
-  YouTubeSearchResponse,
-} from '../../models/search-results.model';
+import { SearchCriterion } from '../../models/search-results.model';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, forkJoin, NEVER, of, Subscription, switchMap } from 'rxjs';
+import { catchError, NEVER, Subscription, switchMap } from 'rxjs';
 import { FilterValue, SortDirection } from '../../enums/results.enum';
 
 @Component({
@@ -32,7 +22,6 @@ export class SearchResultsComponent implements OnDestroy {
   filteredResultsArray: any;
   isSettingsPanelOpen = false;
   private subscription: Subscription | undefined;
-  videosFound: any;
   originalResultsArray: any;
 
   constructor(private route: ActivatedRoute) {}
@@ -59,10 +48,10 @@ export class SearchResultsComponent implements OnDestroy {
       .pipe(
         switchMap((response) => {
           const videoIds = response.items.map((item: any) => item.id.videoId);
-          this.videosFound =
+          const videosFound =
             this.searchResultsService.getVideoDetails(videoIds);
 
-          return this.videosFound;
+          return videosFound;
         }),
         catchError((error) => {
           console.error(error);
