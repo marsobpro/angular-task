@@ -1,0 +1,81 @@
+@import "../../../styles/colors.scss";
+
+.results-wrapper {
+  margin-top: 2rem;
+  margin-inline: 6rem;
+}
+
+.cards {
+  display: grid;
+  margin-top: 4rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+mat-card {
+  width: 260px;
+  height: 327px;
+  border-bottom: 4px solid;
+  &.red {
+    border-bottom-color: $red;
+  }
+  &.yellow {
+    border-bottom-color: $yellow;
+  }
+  &.green {
+    border-bottom-color: $green;
+  }
+  &.blue {
+    border-bottom-color: $blue;
+  }
+}
+
+mat-card-header {
+  img {
+    width: 100%;
+  }
+}
+
+mat-card-actions {
+  padding-inline: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-container {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.2rem;
+  p {
+    margin: 0;
+    padding-top: 3px;
+  }
+  i {
+    display: flex;
+    font-size: 1rem;
+  }
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-size: 1rem;
+  font-weight: 500;
+
+  p {
+    margin-top: 0;
+  }
+}
+
+.more-button {
+  width: 50%;
+}

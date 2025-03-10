@@ -1,0 +1,46 @@
+<div class="login-page-container">
+  <div class="form-wrapper">
+    <h3 class="form-header">Login</h3>
+    <form class="form" (ngSubmit)="onSubmit()" aria-label="Search Form">
+      <!-- Login -->
+      <mat-form-field appearance="fill">
+        <mat-label>Login</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="login"
+          name="login"
+          autocomplete="email"
+          aria-required="true"
+          required
+        />
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="current-password"
+          aria-required="true"
+          required
+        />
+      </mat-form-field>
+
+      <div class="action-buttons">
+        <app-button
+          version="underlined"
+          type="button"
+          class="action-button register-button"
+          >Registration</app-button
+        >
+        <app-button role="sub" type="submit" class="action-button submit-button"
+          >Login</app-button
+        >
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+@import "../../../styles/colors.scss";
+.custom-button {
+  border: none;
+}
+.underlined {
+  text-decoration: underline;
+  background-color: inherit;
+  box-shadow: none;
+  padding: 0;
+  color: $secondary-light;
+}
