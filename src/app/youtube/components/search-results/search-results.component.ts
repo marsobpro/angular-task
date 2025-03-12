@@ -44,10 +44,12 @@ export class SearchResultsComponent implements OnDestroy {
         this.isSettingsPanelOpen = open;
       });
 
-    this.route.queryParams.subscribe((params) => {
-      this.searchQuery = params[SearchParams.SEARCH_QUERY];
-      this.updateSearchResults();
-    });
+    // UNCOMMENT
+
+    // this.route.queryParams.subscribe((params) => {
+    //   this.searchQuery = params[SearchParams.SEARCH_QUERY];
+    //   this.updateSearchResults();
+    // });
   }
 
   ngOnDestroy(): void {

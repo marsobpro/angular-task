@@ -1,17 +1,22 @@
 <div class="login-page-container">
   <div class="form-wrapper">
     <h3 class="form-header">Login</h3>
-    <form class="form" (ngSubmit)="onSubmit()" aria-label="Search Form">
+    <form
+      class="form"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      aria-label="Search Form"
+    >
       <!-- Login -->
       <mat-form-field appearance="fill">
         <mat-label>Login</mat-label>
         <input
           matInput
           type="text"
-          [(ngModel)]="login"
           name="login"
           autocomplete="email"
           aria-required="true"
+          formControlName="email"
           required
         />
       </mat-form-field>
@@ -22,13 +27,23 @@
         <input
           matInput
           type="password"
-          [(ngModel)]="password"
           name="password"
           autocomplete="current-password"
           aria-required="true"
+          formControlName="password"
           required
         />
       </mat-form-field>
+
+      @if(submitted && form.get('password')?.hasError('passwordStrength')) {
+      <p class="form-error-text">
+        {{ form.get('password')?.errors?.['passwordStrength'] }}
+      </p>
+      } @if(submitted && form.get('email')?.hasError('required')) {
+      <p class="form-error-text">Email is required.</p>
+      } @if(submitted && form.get('email')?.hasError('email')) {
+      <p class="form-error-text">Please enter a valid email address.</p>
+      }
 
       <div class="action-buttons">
         <app-button
