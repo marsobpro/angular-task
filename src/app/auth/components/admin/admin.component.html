@@ -1,1 +1,137 @@
-<h2>admin works! lorem*1000</h2>
+<div class="admin-page-container">
+  <div class="form-wrapper">
+    <h3 class="form-header">Create card</h3>
+    <form
+      class="form"
+      aria-label="Create card form"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+    >
+      <!-- Title -->
+      @if(getErrorMessage('title')){
+      <p class="form-error-text" aria-live="assertive">{{ getErrorMessage("title") }}</p>
+      }
+
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          type="text"
+          name="title"
+          aria-required="true"
+          formControlName="title"
+        />
+      </mat-form-field>
+
+      <!-- Description -->
+      @if(getErrorMessage('description')){
+      <p class="form-error-text" aria-live="assertive">{{ getErrorMessage("description") }}</p>
+      }
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          name="description"
+          aria-required="true"
+          formControlName="description"
+        />
+      </mat-form-field>
+
+      <!-- Image link -->
+      @if(getErrorMessage('imageLink')){
+      <p class="form-error-text" aria-live="assertive">{{ getErrorMessage("imageLink") }}</p>
+      }
+      <mat-form-field appearance="fill">
+        <mat-label>Image Link</mat-label>
+        <input
+          matInput
+          name="imageLink"
+          aria-required="true"
+          formControlName="imageLink"
+        />
+      </mat-form-field>
+
+      <!-- Video Link -->
+      @if(getErrorMessage('videoLink')){
+      <p class="form-error-text" aria-live="assertive">{{ getErrorMessage("videoLink") }}</p>
+      }
+      <mat-form-field appearance="fill">
+        <mat-label>Video Link</mat-label>
+        <input
+          matInput
+          name="videoLink"
+          aria-required="true"
+          formControlName="videoLink"
+        />
+      </mat-form-field>
+
+      <!-- Creation date -->
+      @if(getErrorMessage('creationDate')){
+      <p class="form-error-text" aria-live="assertive">{{ getErrorMessage("creationDate") }}</p>
+      }
+      <mat-form-field appearance="fill">
+        <mat-label>Creation Date</mat-label>
+        <input
+          matInput
+          name="creationDate"
+          type="date"
+          aria-required="true"
+          formControlName="creationDate"
+        />
+      </mat-form-field>
+
+      <!-- Tags  -->
+      <div class="tags-container" formArrayName="tags">
+        @for ( tagControl of tagsControls; track tagControl; let index = $index)
+        {
+        <div>
+          @if (getErrorMessage('tags_' + index)) {
+          <p class="form-error-text" aria-live="assertive">
+            {{ getErrorMessage("tags_" + index) }}
+          </p>
+          }
+          <div class="tag-wrapper">
+            <!-- <span>Tag {{ index + 1 }}</span> -->
+            <input
+              class="tag-input"
+              name="tag_{{ index }}"
+              aria-required="true"
+              [formControlName]="index"
+            />
+
+            <button
+              class="delete-tag-button"
+              type="button"
+              (click)="removeTag(index)"
+              *ngIf="index > 0"
+            >
+              <span class="material-icons icon"> delete </span>
+            </button>
+          </div>
+        </div>
+        }
+      </div>
+
+      <button
+        class="add-tag-button"
+        type="button"
+        (click)="addTag()"
+        [disabled]="tagsControls.length >= 5"
+      >
+        Add Tag
+      </button>
+
+      <div class="action-buttons">
+        <app-button version="underlined" class="action-button register-button" (click)="onReset()"
+          >Reset</app-button
+        >
+        <app-button
+          role="submit"
+          type="submit"
+          class="action-button submit-button"
+          >Create card</app-button
+        >
+      </div>
+    </form>
+  </div>
+</div>
