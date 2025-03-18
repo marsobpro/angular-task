@@ -1,15 +1,12 @@
 <div class="admin-page-container">
   <div class="form-wrapper">
     <h3 class="form-header">Create card</h3>
-    <form
-      class="form"
-      aria-label="Create card form"
-      [formGroup]="form"
-      (ngSubmit)="onSubmit()"
-    >
+    <form class="form" aria-label="Create card form" [formGroup]="form">
       <!-- Title -->
       @if(getErrorMessage('title')){
-      <p class="form-error-text" aria-live="assertive">{{ getErrorMessage("title") }}</p>
+      <p class="form-error-text" aria-live="assertive">
+        {{ getErrorMessage("title") }}
+      </p>
       }
 
       <mat-form-field appearance="fill">
@@ -25,7 +22,9 @@
 
       <!-- Description -->
       @if(getErrorMessage('description')){
-      <p class="form-error-text" aria-live="assertive">{{ getErrorMessage("description") }}</p>
+      <p class="form-error-text" aria-live="assertive">
+        {{ getErrorMessage("description") }}
+      </p>
       }
       <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
@@ -39,7 +38,9 @@
 
       <!-- Image link -->
       @if(getErrorMessage('imageLink')){
-      <p class="form-error-text" aria-live="assertive">{{ getErrorMessage("imageLink") }}</p>
+      <p class="form-error-text" aria-live="assertive">
+        {{ getErrorMessage("imageLink") }}
+      </p>
       }
       <mat-form-field appearance="fill">
         <mat-label>Image Link</mat-label>
@@ -52,9 +53,7 @@
       </mat-form-field>
 
       <!-- Video Link -->
-      @if(getErrorMessage('videoLink')){
-      <p class="form-error-text" aria-live="assertive">{{ getErrorMessage("videoLink") }}</p>
-      }
+
       <mat-form-field appearance="fill">
         <mat-label>Video Link</mat-label>
         <input
@@ -63,11 +62,20 @@
           aria-required="true"
           formControlName="videoLink"
         />
+
+        @if(getErrorMessage('videoLink')){
+        <mat-error>
+          {{ getErrorMessage("videoLink") }}
+        </mat-error>
+
+        }
       </mat-form-field>
 
       <!-- Creation date -->
       @if(getErrorMessage('creationDate')){
-      <p class="form-error-text" aria-live="assertive">{{ getErrorMessage("creationDate") }}</p>
+      <p class="form-error-text" aria-live="assertive">
+        {{ getErrorMessage("creationDate") }}
+      </p>
       }
       <mat-form-field appearance="fill">
         <mat-label>Creation Date</mat-label>
@@ -122,15 +130,15 @@
       </button>
 
       <div class="action-buttons">
-        <app-button version="underlined" class="action-button register-button" (click)="onReset()"
+        <app-button
+          version="underlined"
+          class="action-button register-button"
+          (click)="onReset()"
           >Reset</app-button
         >
-        <app-button
-          role="submit"
-          type="submit"
-          class="action-button submit-button"
-          >Create card</app-button
-        >
+        <button (click)="onSubmit()" class="action-button submit-button">
+          Create card
+        </button>
       </div>
     </form>
   </div>
