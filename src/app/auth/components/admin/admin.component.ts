@@ -23,7 +23,6 @@ import {
 })
 export class AdminComponent {
   formSubmitted = false;
-  // form: FormGroup;
   form = new FormGroup({
     title: new FormControl('', [
       Validators.required,
@@ -123,6 +122,7 @@ export class AdminComponent {
 
   onReset(): void {
     this.form.reset();
+    this.formSubmitted = false;
   }
 
   onSubmit(): void {
