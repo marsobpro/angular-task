@@ -17,7 +17,11 @@ export class VideoDetailsComponent {
 
   ngOnInit(): void {
     this.videoId = this.route.snapshot.paramMap.get('videoId') as string;
-    this.videoDetails = this.searchResultsService.getVideo(this.videoId);
+    this.searchResultsService
+      .getVideoDetails([this.videoId])
+      .subscribe((value: any) => {
+        return (this.videoDetails = value.items[0]);
+      });
   }
 
   goBack(): void {

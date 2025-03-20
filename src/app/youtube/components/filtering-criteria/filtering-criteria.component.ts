@@ -38,7 +38,8 @@ export class FilteringCriteriaComponent {
 
   handleCriterionClick(selectedCriterion: SearchCriterion) {
     this.searchCriteria = this.searchCriteria.map((criterion) => {
-      if (criterion.value !== selectedCriterion.value) return criterion;
+      if (criterion.value !== selectedCriterion.value)
+        return { ...criterion, direction: SortDirection.None };
 
       // Show input for word or sentence and return
       if (selectedCriterion.value === FilterValue.WordOrSentence) {

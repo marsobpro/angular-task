@@ -9,6 +9,8 @@ import { UploadAgeDirective } from './directives/upload-age-directive/upload-age
 import { FormsModule } from '@angular/forms';
 import { YoutubeRoutingModule } from './youtube-routing.module';
 import { VideoDetailsComponent } from './components/video-details/video-details.component';
+import { provideHttpClient } from '@angular/common/http';
+import { SortResultsPipe } from './pipes/sort-results.pipe';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { VideoDetailsComponent } from './components/video-details/video-details.
     FormsModule,
     NgOptimizedImage,
     UploadAgeDirective,
+    SortResultsPipe,
   ],
   exports: [SearchResultsComponent, FilteringCriteriaComponent],
 })

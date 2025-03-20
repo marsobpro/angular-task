@@ -1,16 +1,16 @@
 import {
+  ChangeDetectorRef,
   Component,
   inject,
   Input,
-  OnChanges,
   OnDestroy,
-  SimpleChanges,
 } from '@angular/core';
 import { SearchResultsService } from './search-results.service';
 import { SearchCriterion } from '../../models/search-results.model';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { catchError, NEVER, Subscription, switchMap } from 'rxjs';
 import { FilterValue, SortDirection } from '../../enums/results.enum';
+import { SearchParams } from '../../enums/search-queries.enum';
 
 @Component({
   selector: 'app-search-results',
@@ -18,7 +18,7 @@ import { FilterValue, SortDirection } from '../../enums/results.enum';
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss'],
 })
-export class SearchResultsComponent implements OnChanges, OnDestroy {
+export class SearchResultsComponent implements OnDestroy {
   searchQuery = '';
   @Input() filterCriterion: SearchCriterion = {
     name: '',
@@ -26,11 +26,17 @@ export class SearchResultsComponent implements OnChanges, OnDestroy {
     direction: SortDirection.None,
   };
   private searchResultsService = inject(SearchResultsService);
-  filteredResultsArray: any[] = [];
-  isSettingsPanelOpen = false;
   private subscription: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute) {}
+  filteredResultsArray: any;
+  originalResultsArray: any;
+
+  isSettingsPanelOpen = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.subscription =
@@ -39,7 +45,7 @@ export class SearchResultsComponent implements OnChanges, OnDestroy {
       });
 
     this.route.queryParams.subscribe((params) => {
-      this.searchQuery = params['search_query'];
+      this.searchQuery = params[SearchParams.SEARCH_QUERY];
       this.updateSearchResults();
     });
   }
@@ -48,26 +54,51 @@ export class SearchResultsComponent implements OnChanges, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['filterCriterion']) {
-      this.updateSearchResults();
-    }
-  }
-
   private updateSearchResults() {
-    this.filteredResultsArray = this.searchResultsService.getSearchResults(
-      this.searchQuery,
-      this.filterCriterion
-    );
+    this.searchResultsService
+      .getSearchResults(this.searchQuery)
+      .pipe(
+        switchMap((response) => {
+          const videoIds = response.items.map((item: any) => item.id.videoId);
+          const videosFound =
+            this.searchResultsService.getVideoDetails(videoIds);
+
+          return videosFound;
+        }),
+        catchError((error) => {
+          console.error(error);
+          return NEVER;
+        })
+      )
+      .subscribe((data: any) => {
+        return (this.filteredResultsArray = data.items);
+      });
   }
 
   handleFilterCriterionChange(criterion: SearchCriterion) {
     this.filterCriterion = criterion;
-    this.updateSearchResults();
+    this.cdRef.detectChanges();
   }
 
   onWordOrSentenceSearch(searchString: string) {
-    this.searchQuery = searchString;
-    this.updateSearchResults();
+    if (searchString.trim() === '') {
+      this.filteredResultsArray = this.originalResultsArray;
+      return this.filteredResultsArray;
+    }
+
+    if (!this.originalResultsArray) {
+      this.originalResultsArray = this.filteredResultsArray;
+    }
+
+    const normalizedSearchString = searchString.trim().toLowerCase();
+
+    this.filteredResultsArray = this.originalResultsArray.filter(
+      (result: any) => {
+        const title = result?.snippet?.title ?? '';
+        return title.trim().toLowerCase().includes(normalizedSearchString);
+      }
+    );
+
+    return this.filteredResultsArray;
   }
 }

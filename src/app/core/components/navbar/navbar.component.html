@@ -5,23 +5,17 @@
     </a>
 
     <!-- Search form -->
-    <form
-      class="form-container"
-      (ngSubmit)="onSubmit()"
-      aria-label="Search Form"
-    >
+    <form class="form-container" aria-label="Search Form">
       <div class="search-input-wrapper">
         <input
           type="text"
           name="search"
           matInput
           placeholder="What do you want to find out?"
-          [(ngModel)]="searchString"
+          (keyup)="onSearchChange(searchInput.value)"
           aria-label="Search input field"
+          #searchInput
         />
-        <button mat-flat-button class="button" aria-label="Search">
-          search
-        </button>
       </div>
       <button
         class="button settings-button"
@@ -40,8 +34,14 @@
     <a href="/" class="button" aria-label="Go to user profile">
       <span class="material-icons icon"> account_circle </span>
     </a>
+    @if (this.authService.data$ | async) {
     <button class="logout-button" (click)="onLogout()" aria-label="Logout">
       Logout
     </button>
+    } @else {
+    <button class="logout-button" routerLink="/login" aria-label="Login">
+      Login
+    </button>
+    }
   </div>
 </nav>
