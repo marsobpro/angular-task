@@ -1,0 +1,91 @@
+@import "../../../styles/colors.scss";
+
+.admin-page-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-wrapper {
+  width: 22rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.form-header {
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.action-buttons {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.form-error-text {
+  margin: 0.2rem;
+  font-size: 0.8rem;
+  color: $red;
+}
+
+.add-tag-button {
+  margin-top: 1rem;
+  padding: 0.6rem;
+  width: fit-content;
+  margin-inline: auto;
+  border: 1px solid $text-secondary;
+  cursor: pointer;
+  transition: 150ms;
+  &:hover {
+    border-color: $green;
+    border-radius: 1rem;
+    opacity: 0.8;
+  }
+}
+
+.delete-tag-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: 150ms;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.tags-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.tag-wrapper {
+  display: flex;
+  background-color: $background-secondary;
+  border-radius: 1rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+.tag-input {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  width: 100%;
+}

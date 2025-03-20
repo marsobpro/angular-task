@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
   MatFormField,
@@ -11,9 +11,10 @@ import { MatInputModule } from '@angular/material/input';
 import { LoginComponent } from './components/login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, AdminComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -23,7 +24,8 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     MatInputModule,
     SharedModule,
+    ReactiveFormsModule,
   ],
-  exports: [LoginComponent],
+  exports: [LoginComponent, AdminComponent],
 })
 export class AuthModule {}

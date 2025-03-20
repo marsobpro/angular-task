@@ -37,28 +37,34 @@ export class FilteringCriteriaComponent {
   ];
 
   handleCriterionClick(selectedCriterion: SearchCriterion) {
-    this.searchCriteria = this.searchCriteria.map((criterion) => {
-      if (criterion.value !== selectedCriterion.value)
+    const updatedCriteria = this.searchCriteria.map((criterion) => {
+      if (criterion.value !== selectedCriterion.value) {
         return { ...criterion, direction: SortDirection.None };
+      }
 
-      // Show input for word or sentence and return
       if (selectedCriterion.value === FilterValue.WordOrSentence) {
         return { ...criterion, showInput: !criterion.showInput };
       }
 
-      // Handle date and views filters
       let newDirection: SortDirection.Ascending | SortDirection.Descending;
-      if (selectedCriterion.direction === SortDirection.None) {
-        newDirection = SortDirection.Ascending;
-      } else {
-        newDirection =
-          criterion.direction === SortDirection.Ascending
-            ? SortDirection.Descending
-            : SortDirection.Ascending;
-      }
-      this.filterCriterion.emit(criterion);
+
+      newDirection =
+        criterion.direction === SortDirection.Ascending ||
+        criterion.direction === SortDirection.None
+          ? SortDirection.Descending
+          : SortDirection.Ascending;
+
       return { ...criterion, direction: newDirection };
     });
+
+    this.searchCriteria = updatedCriteria;
+
+    const emittedCriterion = updatedCriteria.find(
+      (criterion) => criterion.value === selectedCriterion.value
+    );
+    if (emittedCriterion) {
+      this.filterCriterion.emit(emittedCriterion);
+    }
   }
 
   onSearch() {

@@ -12,13 +12,16 @@ export class AuthService {
     this.isLoggedInFromLocalStorage
   );
   public data$: Observable<boolean> = this.dataSubject.asObservable();
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    if (this.isLoggedIn()) {
+      this.router.navigate([ROUTES.RESULTS]);
+    }
+  }
 
   login(login: string, password: string): void {
     const token = 'some-auth-token';
     localStorage.setItem('authToken', token);
     this.dataSubject.next(true);
-
     this.router.navigate([ROUTES.RESULTS]);
   }
 
@@ -29,6 +32,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.isLoggedInFromLocalStorage;
+    return !!localStorage.getItem('authToken');
   }
 }

@@ -35,13 +35,13 @@
       <span class="material-icons icon"> account_circle </span>
     </a>
     @if (this.authService.data$ | async) {
-    <button class="logout-button" (click)="onLogout()" aria-label="Logout">
+    <app-button class="logout-button" (click)="onLogout()" aria-label="Logout">
       Logout
-    </button>
+    </app-button>
     } @else {
-    <button class="logout-button" routerLink="/login" aria-label="Login">
+    <app-button class="logout-button" routerLink="/login" aria-label="Login">
       Login
-    </button>
+    </app-button>
     }
   </div>
 </nav>
