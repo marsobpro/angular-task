@@ -1,30 +1,29 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AdminComponent } from './components/admin/admin.component';
 import {
   MatFormField,
   MatFormFieldModule,
   MatLabel,
 } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
-import { LoginComponent } from './components/login/login.component';
-import { AuthRoutingModule } from './auth-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { AdminRoutingModule } from './admin-routing.module';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [AdminComponent],
   imports: [
     CommonModule,
-    AuthRoutingModule,
     MatLabel,
     MatFormField,
     MatFormFieldModule,
-    FormsModule,
     MatInputModule,
+    FormsModule,
     SharedModule,
     ReactiveFormsModule,
+    AdminRoutingModule,
   ],
-  exports: [LoginComponent],
+  exports: [AdminComponent],
 })
-export class AuthModule {}
+export class AdminModule {}
