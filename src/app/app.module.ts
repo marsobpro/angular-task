@@ -10,6 +10,9 @@ import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { SortResultsPipe } from './youtube/pipes/sort-results.pipe';
+import { StoreModule } from '@ngrx/store';
+import { cardReducer } from './store/card/custom-card.reducer';
+import { paginationReducer } from './store/pagination/pagination.reducer';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -22,6 +25,10 @@ import { SortResultsPipe } from './youtube/pipes/sort-results.pipe';
     CommonModule,
     AuthModule,
     SortResultsPipe,
+    StoreModule.forRoot({
+      cards: cardReducer,
+      pagination: paginationReducer,
+    }),
   ],
 
   providers: [provideHttpClient()],

@@ -22,17 +22,19 @@ export class SearchResultsService {
     this.isSettingsPanelOpenSubject.next(open);
   }
 
-  getVideoDetails(videoIds: string[]) {
+  getVideoDetails(videoIds: string[], pageToken: string | null = null) {
     const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=${videoIds.join(
       ','
-    )}&key=${this.apiKey}`;
+    )}&pageToken=${pageToken ?? ''}&key=${this.apiKey}`;
+
     return this.httpClient.get(url);
   }
-
-  getSearchResults(searchString: string = '') {
+  getSearchResults(searchString: string = '', pageToken: string | null = null) {
     const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
       searchString
-    )}&type=video&maxResults=${this.maxResults}&key=${this.apiKey}`;
+    )}&type=video&maxResults=${this.maxResults}&pageToken=${
+      pageToken ?? ''
+    }&key=${this.apiKey}`;
 
     return this.fetchVideos(url).pipe(
       map((data) => {

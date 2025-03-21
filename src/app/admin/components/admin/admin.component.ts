@@ -14,6 +14,12 @@ import {
   ControlNames,
   ErrorMessages,
 } from '../../enums/card-creation-form.enums';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { selectAllCards } from '../../../store/card/custom-card.selectors';
+import * as CardActions from '../../../store/card/custom-card.actions';
+import { Router } from '@angular/router';
+import { ROUTES } from '../../../core/constants/app-routes';
 
 @Component({
   selector: 'app-admin',
@@ -35,6 +41,11 @@ export class AdminComponent {
     creationDate: new FormControl('', [Validators.required, dateNotInFuture]),
     tags: new FormArray([this.createTag()]),
   });
+  cards$: Observable<any[]>;
+
+  constructor(private store: Store, private router: Router) {
+    this.cards$ = this.store.select(selectAllCards);
+  }
 
   get tagsControls(): AbstractControl[] {
     return (this.form.get('tags') as FormArray).controls;
@@ -120,6 +131,16 @@ export class AdminComponent {
     return null;
   }
 
+  addCard(card: any) {
+    console.log('IN ADD CARD, CARD:', card);
+    this.store.dispatch(CardActions.createCard({ card }));
+    this.router.navigate([ROUTES.HOME]);
+  }
+
+  deleteCard(id: string) {
+    this.store.dispatch(CardActions.deleteCard({ id }));
+  }
+
   onReset(): void {
     this.form.reset();
     this.formSubmitted = false;
@@ -130,6 +151,18 @@ export class AdminComponent {
     if (this.form.invalid) {
       return;
     }
+    const { title, description, imageLink, videoLink, creationDate, tags } =
+      this.form.value;
+    const newCard = {
+      id: Math.random().toString(),
+      title: title,
+      description: description,
+      imageLink: imageLink,
+      videoLink: videoLink,
+      publishedAt: creationDate,
+      tags: tags,
+    };
+    this.addCard(newCard);
     alert('Form cuessfully submitted');
     this.form.reset();
   }
