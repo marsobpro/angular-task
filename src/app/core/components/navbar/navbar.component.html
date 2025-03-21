@@ -31,7 +31,7 @@
   <!-- User data -->
   <div class="user-data-wrapper">
     <p class="user-name">Your name</p>
-    <a href="/" class="button" aria-label="Go to user profile">
+    <a routerLink="/admin" class="button" aria-label="Go to user profile">
       <span class="material-icons icon"> account_circle </span>
     </a>
     @if (this.authService.data$ | async) {

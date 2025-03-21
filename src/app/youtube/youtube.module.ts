@@ -11,12 +11,14 @@ import { YoutubeRoutingModule } from './youtube-routing.module';
 import { VideoDetailsComponent } from './components/video-details/video-details.component';
 import { provideHttpClient } from '@angular/common/http';
 import { SortResultsPipe } from './pipes/sort-results.pipe';
+import { VideoCardComponent } from './components/video-card/video-card.component';
 
 @NgModule({
   declarations: [
     SearchResultsComponent,
     FilteringCriteriaComponent,
     VideoDetailsComponent,
+    VideoCardComponent,
   ],
   imports: [
     YoutubeRoutingModule,

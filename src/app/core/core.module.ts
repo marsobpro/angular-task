@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
+import { RouterLink } from '@angular/router';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -16,6 +17,7 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     CommonModule,
     SharedModule,
+    RouterLink,
   ],
   exports: [NavbarComponent],
 })
