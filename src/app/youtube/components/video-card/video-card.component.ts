@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as CardActions from '../../../store/card/custom-card.actions';
+import { addToFavorites } from '../../../store/favorites/favorites.actions';
 
 @Component({
   selector: 'app-video-card',
@@ -56,5 +57,9 @@ export class VideoCardComponent {
   deleteCard(id: string) {
     this.store.dispatch(CardActions.deleteCard({ id }));
     alert('You deleted your custom card');
+  }
+
+  addToFavorites(video: any) {
+    this.store.dispatch(addToFavorites({ video }));
   }
 }

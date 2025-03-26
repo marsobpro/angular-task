@@ -26,8 +26,13 @@
         routerLinkActive="router-link-active"
         >more...</a
       >
+      <!-- <span class="material-icons"> favorite </span> -->
+      <button class="button" (click)="addToFavorites(video)">
+        <span class="material-icons"> favorite_border </span>
+      </button>
+
       @if(!isApiCard) {
-      <span class="material-icons delete-icon" (click)="deleteCard(video.id)">
+      <span class="material-icons button" (click)="deleteCard(video.id)">
         delete
       </span>
       }

@@ -15,6 +15,7 @@ import { cardReducer } from './store/card/custom-card.reducer';
 import { paginationReducer } from './store/pagination/pagination.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { CustomCardEffect } from './store/card/custom-card.effects';
+import { favoritesReducer } from './store/favorites/favorites.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { CustomCardEffect } from './store/card/custom-card.effects';
     StoreModule.forRoot({
       cards: cardReducer,
       pagination: paginationReducer,
+      favorites: favoritesReducer,
     }),
     EffectsModule.forRoot([CustomCardEffect]),
   ],

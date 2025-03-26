@@ -45,6 +45,14 @@ export class SearchResultsService {
     );
   }
 
+  getVideoById(videoId: string) {
+    return this.getVideoDetails([videoId]).pipe(
+      map((response: any) => {
+        return response.items[0];
+      })
+    );
+  }
+
   private fetchVideos(url: string) {
     console.log('--------------FETCHING VIDEOS---------------');
     return this.httpClient.get<any>(url);

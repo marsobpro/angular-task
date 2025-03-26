@@ -35,6 +35,10 @@ import { CustomCardEffect } from '../store/card/custom-card.effects';
     EffectsModule.forFeature([CustomCardEffect]),
   ],
   providers: [CustomCardEffect],
-  exports: [SearchResultsComponent, FilteringCriteriaComponent],
+  exports: [
+    SearchResultsComponent,
+    FilteringCriteriaComponent,
+    VideoCardComponent,
+  ],
 })
 export class YoutubeModule {}
