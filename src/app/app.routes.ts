@@ -19,6 +19,12 @@ export const routes: Routes = [
       import('./admin/admin.module').then((m) => m.AdminModule),
   },
   {
+    path: 'favorites',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./favorites/favorites.module').then((m) => m.FavoritesModule),
+  },
+  {
     path: 'results',
     canActivate: [AuthGuard],
     loadChildren: () =>
