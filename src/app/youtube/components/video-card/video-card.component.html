@@ -26,12 +26,15 @@
         routerLinkActive="router-link-active"
         >more...</a
       >
-      <!-- <span class="material-icons"> favorite </span> -->
+      @if(isFavorite$ | async ) {
+      <button class="button" (click)="addToFavorites(video)">
+        <span class="material-icons"> favorite </span>
+      </button>
+      IN FAVORITES } @else {
       <button class="button" (click)="addToFavorites(video)">
         <span class="material-icons"> favorite_border </span>
       </button>
-
-      @if(!isApiCard) {
+      NOT IN FAVORITES } @if(!isApiCard) {
       <span class="material-icons button" (click)="deleteCard(video.id)">
         delete
       </span>

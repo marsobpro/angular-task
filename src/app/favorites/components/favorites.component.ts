@@ -13,6 +13,5 @@ export class FavoritesComponent {
 
   constructor(private store: Store<{ favorites: { videos: any[] } }>) {
     this.favorites$ = this.store.select((state) => state.favorites.videos);
-    this.favorites$.subscribe((a) => console.log(a));
   }
 }
