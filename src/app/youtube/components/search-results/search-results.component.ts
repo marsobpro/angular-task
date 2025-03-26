@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { SearchResultsService } from './search-results.service';
 import { SearchCriterion } from '../../models/search-results.model';
 import { ActivatedRoute } from '@angular/router';
@@ -37,11 +30,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   isSettingsPanelOpen = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private cdRef: ChangeDetectorRef,
-    private store: Store
-  ) {}
+  constructor(private route: ActivatedRoute, private store: Store) {}
 
   ngOnInit(): void {
     this.subscription =
@@ -52,6 +41,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     this.store.select(selectAllCards).subscribe((cardsData) => {
       this.allCards = cardsData;
       this.filteredResultsArray = cardsData;
+      this.originalResultsArray = cardsData;
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -60,19 +50,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
-
   private updateSearchResults() {
     this.store.dispatch(
       CardActions.getVideos({ searchQuery: this.searchQuery })
     );
   }
 
+  //FILTERS
+
   handleFilterCriterionChange(criterion: SearchCriterion) {
     this.filterCriterion = criterion;
-    this.cdRef.detectChanges();
     this.updateFilteredResults();
   }
 
@@ -95,10 +82,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.allCards) {
-      results = [...this.allCards, ...results];
-    }
-
     this.filteredResultsArray = results;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }
