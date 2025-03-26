@@ -13,6 +13,9 @@ import { SortResultsPipe } from './youtube/pipes/sort-results.pipe';
 import { StoreModule } from '@ngrx/store';
 import { cardReducer } from './store/card/custom-card.reducer';
 import { paginationReducer } from './store/pagination/pagination.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { CustomCardEffect } from './store/card/custom-card.effects';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -29,6 +32,7 @@ import { paginationReducer } from './store/pagination/pagination.reducer';
       cards: cardReducer,
       pagination: paginationReducer,
     }),
+    EffectsModule.forRoot([CustomCardEffect]),
   ],
 
   providers: [provideHttpClient()],

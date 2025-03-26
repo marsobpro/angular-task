@@ -32,7 +32,6 @@ export class VideoDetailsComponent {
 
   // Check if it's an API card
   get isApiCard(): boolean {
-    console.log('IS API CARD');
     return (
       this.videoDetails &&
       this.videoDetails.snippet &&

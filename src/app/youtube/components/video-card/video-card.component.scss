@@ -67,8 +67,28 @@ mat-card-content {
     margin-top: 0;
     color: $text-primary;
   }
+
+  a {
+    background-color: $blue;
+    color: $white;
+    padding: 0.4rem 1rem;
+    border-radius: 1rem;
+  }
+}
+
+.horizontal-container {
+  display: flex;
+  gap: 1rem;
 }
 
 .more-button {
   width: 50%;
+}
+
+.delete-icon {
+  cursor: pointer;
+  transition: 150ms ease-in-out;
+  &:hover {
+    opacity: 0.7;
+  }
 }

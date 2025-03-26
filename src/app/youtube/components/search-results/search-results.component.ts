@@ -9,11 +9,12 @@ import {
 import { SearchResultsService } from './search-results.service';
 import { SearchCriterion } from '../../models/search-results.model';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, NEVER, Subscription, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FilterValue, SortDirection } from '../../enums/results.enum';
 import { SearchParams } from '../../enums/search-queries.enum';
 import { Store } from '@ngrx/store';
 import { selectAllCards } from '../../../store/card/custom-card.selectors';
+import * as CardActions from '../../../store/card/custom-card.actions';
 
 @Component({
   selector: 'app-search-results',
@@ -30,7 +31,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   };
   private searchResultsService = inject(SearchResultsService);
   private subscription: Subscription | undefined;
-  customCards: any;
+  allCards: any;
   originalResultsArray: any;
   filteredResultsArray: any;
 
@@ -48,13 +49,14 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         (open) => (this.isSettingsPanelOpen = open)
       );
 
+    this.store.select(selectAllCards).subscribe((cardsData) => {
+      this.allCards = cardsData;
+      this.filteredResultsArray = cardsData;
+    });
+
     this.route.queryParams.subscribe((params) => {
       this.searchQuery = params[SearchParams.SEARCH_QUERY];
       this.updateSearchResults();
-    });
-
-    this.store.select(selectAllCards).subscribe((cardsData) => {
-      this.customCards = cardsData;
     });
   }
 
@@ -63,22 +65,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   private updateSearchResults() {
-    this.searchResultsService
-      .getSearchResults(this.searchQuery)
-      .pipe(
-        switchMap((response) => {
-          const videoIds = response.items.map((item: any) => item.id.videoId);
-          return this.searchResultsService.getVideoDetails(videoIds);
-        }),
-        catchError((error) => {
-          console.error(error);
-          return NEVER;
-        })
-      )
-      .subscribe((data: any) => {
-        this.originalResultsArray = data.items;
-        this.updateFilteredResults();
-      });
+    this.store.dispatch(
+      CardActions.getVideos({ searchQuery: this.searchQuery })
+    );
   }
 
   handleFilterCriterionChange(criterion: SearchCriterion) {
@@ -106,10 +95,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       });
     }
 
-    console.log('CUSTOM CARDS', this.customCards);
-
-    if (this.customCards) {
-      results = [...this.customCards, ...results];
+    if (this.allCards) {
+      results = [...this.allCards, ...results];
     }
 
     this.filteredResultsArray = results;

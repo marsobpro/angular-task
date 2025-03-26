@@ -12,6 +12,8 @@ import { VideoDetailsComponent } from './components/video-details/video-details.
 import { provideHttpClient } from '@angular/common/http';
 import { SortResultsPipe } from './pipes/sort-results.pipe';
 import { VideoCardComponent } from './components/video-card/video-card.component';
+import { EffectsModule } from '@ngrx/effects';
+import { CustomCardEffect } from '../store/card/custom-card.effects';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { VideoCardComponent } from './components/video-card/video-card.component
     NgOptimizedImage,
     UploadAgeDirective,
     SortResultsPipe,
+    EffectsModule.forFeature([CustomCardEffect]),
   ],
+  providers: [CustomCardEffect],
   exports: [SearchResultsComponent, FilteringCriteriaComponent],
 })
 export class YoutubeModule {}

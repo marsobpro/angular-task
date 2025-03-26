@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as CardActions from '../../../store/card/custom-card.actions';
 
 @Component({
   selector: 'app-video-card',
@@ -9,7 +11,12 @@ import { Component, Input } from '@angular/core';
 export class VideoCardComponent {
   @Input() video: any;
 
-  // Function to check if it's an API card
+  constructor(
+    private store: Store,
+
+    private cdRef: ChangeDetectorRef
+  ) {}
+
   get isApiCard(): boolean {
     return (
       this.video &&
@@ -18,35 +25,36 @@ export class VideoCardComponent {
     );
   }
 
-  // Getter for the published date, depending on card type
   get publishedAt(): string {
     return this.isApiCard
       ? this.video.snippet.publishedAt
       : this.video.publishedAt;
   }
 
-  // Getter for the image URL, depending on card type
   get imageUrl(): string {
     return this.isApiCard
       ? this.video.snippet.thumbnails.medium.url
       : this.video.imageLink;
   }
 
-  // Getter for the title, depending on card type
   get title(): string {
     return this.isApiCard ? this.video.snippet.title : this.video.title;
   }
 
-  // Other properties (views, likes, etc.) can follow similar logic
   get viewCount(): number {
-    return this.isApiCard ? this.video.statistics.viewCount : 0; // Set a default or custom logic
+    return this.isApiCard ? this.video.statistics.viewCount : 0;
   }
 
   get likeCount(): number {
-    return this.isApiCard ? this.video.statistics.likeCount : 0; // Set a default or custom logic
+    return this.isApiCard ? this.video.statistics.likeCount : 0;
   }
 
   get commentCount(): number {
-    return this.isApiCard ? this.video.statistics.commentCount : 0; // Set a default or custom logic
+    return this.isApiCard ? this.video.statistics.commentCount : 0;
+  }
+
+  deleteCard(id: string) {
+    this.store.dispatch(CardActions.deleteCard({ id }));
+    alert('You deleted your custom card');
   }
 }

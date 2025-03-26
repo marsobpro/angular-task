@@ -89,3 +89,11 @@
   padding: 0.5rem;
   width: 100%;
 }
+
+.submit-button {
+  cursor: pointer;
+  transition: 150ms;
+  &:hover {
+    opacity: 0.7;
+  }
+}

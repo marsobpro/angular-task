@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { YouTubeSearchResponse } from '../../models/search-results.model';
 import { BehaviorSubject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
 @Injectable({ providedIn: 'root' })
 export class SearchResultsService {
@@ -9,9 +10,9 @@ export class SearchResultsService {
   isSettingsPanelOpen$ = this.isSettingsPanelOpenSubject.asObservable();
   private maxResults = 10;
   private apiKey = 'AIzaSyBriZ8PjXKBYpARj6ShgGoBicsPzR1qSII';
-  videosFound!: YouTubeSearchResponse;
+  videosFound!: any;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private store: Store) {}
 
   toggleIsSettingsPanelOpen() {
     const currentState = this.isSettingsPanelOpenSubject.getValue();
@@ -46,6 +47,6 @@ export class SearchResultsService {
 
   private fetchVideos(url: string) {
     console.log('--------------FETCHING VIDEOS---------------');
-    return this.httpClient.get<YouTubeSearchResponse>(url);
+    return this.httpClient.get<any>(url);
   }
 }

@@ -132,7 +132,6 @@ export class AdminComponent {
   }
 
   addCard(card: any) {
-    console.log('IN ADD CARD, CARD:', card);
     this.store.dispatch(CardActions.createCard({ card }));
     this.router.navigate([ROUTES.HOME]);
   }
@@ -163,7 +162,7 @@ export class AdminComponent {
       tags: tags,
     };
     this.addCard(newCard);
-    alert('Form cuessfully submitted');
+    alert('You added a custom card');
     this.form.reset();
   }
 }
