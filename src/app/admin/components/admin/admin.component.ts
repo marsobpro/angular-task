@@ -160,6 +160,7 @@ export class AdminComponent {
       videoLink: videoLink,
       publishedAt: creationDate,
       tags: tags,
+      isCustomCard: true,
     };
     this.addCard(newCard);
     alert('You added a custom card');

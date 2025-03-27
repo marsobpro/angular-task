@@ -1,6 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import * as CardActions from '../../store/card/custom-card.actions';
-import { addToFavorites, removeFromFavorites } from './favorites.actions';
+import * as FavoritesAction from '../../store/favorites/favorites.actions';
 
 export interface FavoritesState {
   videos: any[];
@@ -12,15 +11,22 @@ export const initialState: FavoritesState = {
 
 export const favoritesReducer = createReducer(
   initialState,
-  on(addToFavorites, (state, { video }) => {
-    console.log('Adding video to favorites:', video); // Log the video being passed
+  //Adding to favorites
+  on(FavoritesAction.addToFavorites, (state, { video }) => {
+    const videoExists = state.videos.some((v) => v.id === video.id);
+    if (videoExists) {
+      alert('Video already exists in favorites');
+      return state;
+    }
     return {
       ...state,
       videos: [...state.videos, video],
     };
   }),
-  on(removeFromFavorites, (state, { videoId }) => ({
+
+  // Removing from favorites
+  on(FavoritesAction.removeFromFavorites, (state, { videoId }) => ({
     ...state,
-    videos: state.videos.filter((video) => video.id.videoId !== videoId),
+    videos: state.videos.filter((video) => video.id !== videoId),
   }))
 );

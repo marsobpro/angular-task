@@ -2,6 +2,12 @@ import { Component, inject } from '@angular/core';
 import { SearchResultsService } from '../search-results/search-results.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { Store } from '@ngrx/store';
+import {
+  selectAllCards,
+  selectCustomCards,
+} from '../../../store/card/custom-card.selectors';
+import { combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-video-details',
@@ -14,14 +20,57 @@ export class VideoDetailsComponent {
   videoDetails: any;
   private searchResultsService = inject(SearchResultsService);
 
-  constructor(private route: ActivatedRoute, private location: Location) {}
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private store: Store
+  ) {}
+
+  // ngOnInit(): void {
+  //   console.log('IS API card ', this.isApiCard);
+
+  //   this.videoId = this.route.snapshot.paramMap.get('videoId') as string;
+  //   this.searchResultsService
+  //     .getVideoDetails([this.videoId])
+  //     .subscribe((value: any) => {
+  //       this.videoDetails = value.items[0];
+  //     });
+  //   if (!this.videoDetails) {
+  //     this.store.select(selectCustomCards).subscribe((cardsData) => {
+  //       console.log('CARDS DATA', cardsData);
+  //       const filteredVideo = cardsData.find(
+  //         (video) => video.id === this.videoId
+  //       );
+  //       console.log('FILTERED VIDEO', filteredVideo);
+  //       this.videoDetails = filteredVideo;
+  //     });
+  //   }
+  // }
 
   ngOnInit(): void {
     this.videoId = this.route.snapshot.paramMap.get('videoId') as string;
-    this.searchResultsService
-      .getVideoDetails([this.videoId])
-      .subscribe((value: any) => {
-        this.videoDetails = value.items[0];
+
+    // Combine API and store data
+    combineLatest([
+      this.searchResultsService.getVideoDetails([this.videoId]),
+      this.store.select(selectCustomCards),
+    ])
+      .pipe(
+        map(([apiData, customCards]) => {
+          // Try to find the video in API data first
+          const apiVideo = (apiData as { items: any[] }).items[0];
+          if (apiVideo) return apiVideo;
+
+          // If not found in API data, try to find it in custom cards
+          const customVideo = customCards.find(
+            (video: { id: string }) => video.id === this.videoId
+          );
+          return customVideo || null; // Return null if not found
+        })
+      )
+      .subscribe((video: any) => {
+        this.videoDetails = video;
+        console.log('Video Details:', this.videoDetails);
       });
   }
 
@@ -32,13 +81,9 @@ export class VideoDetailsComponent {
 
   // Check if it's an API card
   get isApiCard(): boolean {
-    return (
-      this.videoDetails &&
-      this.videoDetails.snippet &&
-      this.videoDetails.snippet.publishedAt !== undefined
-    );
+    console.log('THIS VIDEODETAILS', this.videoDetails);
+    return !this.videoDetails?.isCustomCard;
   }
-
   // Getter for published date
   get publishedAt(): string {
     return this.isApiCard

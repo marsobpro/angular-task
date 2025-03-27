@@ -12,7 +12,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { SortResultsPipe } from './youtube/pipes/sort-results.pipe';
 import { StoreModule } from '@ngrx/store';
 import { cardReducer } from './store/card/custom-card.reducer';
-import { paginationReducer } from './store/pagination/pagination.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { CustomCardEffect } from './store/card/custom-card.effects';
 import { favoritesReducer } from './store/favorites/favorites.reducer';
@@ -31,7 +30,6 @@ import { favoritesReducer } from './store/favorites/favorites.reducer';
     SortResultsPipe,
     StoreModule.forRoot({
       cards: cardReducer,
-      pagination: paginationReducer,
       favorites: favoritesReducer,
     }),
     EffectsModule.forRoot([CustomCardEffect]),

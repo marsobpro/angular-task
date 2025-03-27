@@ -1,8 +1,9 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 
-export const selectCardState = createFeatureSelector<any>('cards');
+export const selectFavoritesState = (state: { favorites: { videos: any[] } }) =>
+  state.favorites;
 
-export const selectAllCards = createSelector(selectCardState, (state) => [
-  ...state.customCards,
-  ...state.apiCards,
-]);
+export const selectFavoritesVideos = createSelector(
+  selectFavoritesState,
+  (favoritesState) => favoritesState.videos
+);

@@ -27,14 +27,14 @@
         >more...</a
       >
       @if(isFavorite$ | async ) {
-      <button class="button" (click)="addToFavorites(video)">
+      <button class="button" (click)="removeFromFavorites(video.id)">
         <span class="material-icons"> favorite </span>
       </button>
-      IN FAVORITES } @else {
+      } @else {
       <button class="button" (click)="addToFavorites(video)">
         <span class="material-icons"> favorite_border </span>
       </button>
-      NOT IN FAVORITES } @if(!isApiCard) {
+      } @if(!isApiCard) {
       <span class="material-icons button" (click)="deleteCard(video.id)">
         delete
       </span>
