@@ -31,11 +31,7 @@ export class VideoCardComponent {
   }
 
   get isApiCard(): boolean {
-    return (
-      this.video &&
-      this.video.snippet &&
-      this.video.snippet.publishedAt !== undefined
-    );
+    return !this.video?.isCustomCard;
   }
 
   get publishedAt(): string {

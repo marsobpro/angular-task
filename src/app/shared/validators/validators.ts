@@ -21,3 +21,33 @@ export function dateNotInFuture(control: AbstractControl) {
 
   return null;
 }
+
+export function dateNotEarlierThan(year: number) {
+  return (control: AbstractControl) => {
+    const date = new Date(control.value);
+    if (isNaN(date.getTime())) {
+      return { invalidDate: true };
+    }
+    const minDate = new Date(year, 0, 1); // January 1st of the specified year
+    if (date < minDate) {
+      const formattedMinDate = minDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+      return { dateTooEarly: { minDate: formattedMinDate } };
+    }
+    return null;
+  };
+}
+
+export function validUrl() {
+  return (control: AbstractControl) => {
+    const url = control.value;
+
+    // Regex to validate URLs with or without protocol and www prefix
+    const urlPattern =
+      /^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/\S*)?$/;
+    return urlPattern.test(url) ? null : { invalidUrl: true };
+  };
+}

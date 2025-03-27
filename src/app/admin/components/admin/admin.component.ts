@@ -7,8 +7,10 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  dateNotEarlierThan,
   dateNotInFuture,
   tagStartsWithHash,
+  validUrl,
 } from '../../../shared/validators/validators';
 import {
   ControlNames,
@@ -36,9 +38,13 @@ export class AdminComponent {
       Validators.maxLength(20),
     ]),
     description: new FormControl('', [Validators.maxLength(255)]),
-    imageLink: new FormControl('', [Validators.required]),
-    videoLink: new FormControl('', [Validators.required]),
-    creationDate: new FormControl('', [Validators.required, dateNotInFuture]),
+    imageLink: new FormControl('', [Validators.required, validUrl()]),
+    videoLink: new FormControl('', [Validators.required, validUrl()]),
+    creationDate: new FormControl('', [
+      Validators.required,
+      dateNotInFuture,
+      dateNotEarlierThan(2000),
+    ]),
     tags: new FormArray([this.createTag()]),
   });
   cards$: Observable<any[]>;
@@ -102,11 +108,17 @@ export class AdminComponent {
       if (control?.hasError('required')) {
         return ErrorMessages.REQUIRED_IMAGE_LINK;
       }
+      if (control?.hasError('invalidUrl')) {
+        return ErrorMessages.INVALID_IMAGE_LINK;
+      }
     }
 
     if (controlName === ControlNames.VIDEO_LINK) {
       if (control?.hasError('required')) {
         return ErrorMessages.REQUIRED_VIDEO_LINK;
+      }
+      if (control?.hasError('invalidUrl')) {
+        return ErrorMessages.INVALID_VIDEO_LINK;
       }
     }
 
@@ -116,6 +128,10 @@ export class AdminComponent {
       }
       if (control?.hasError('dateInFuture')) {
         return ErrorMessages.DATE_IN_FUTURE;
+      }
+      if (control?.hasError('dateTooEarly')) {
+        const minDate = control.errors?.['dateTooEarly']?.['minDate'];
+        return ErrorMessages.DATE_TOO_EARLY.replace('{minDate}', minDate);
       }
     }
 

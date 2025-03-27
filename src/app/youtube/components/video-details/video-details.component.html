@@ -16,6 +16,7 @@
         </p>
       </div>
       <p class="description">{{ description }}</p>
+      @if(isApiCard) {
       <div class="stats-container">
         <div class="stat">
           <span class="material-icons"> visibility </span>
@@ -31,6 +32,14 @@
           {{ commentCount }}
         </div>
       </div>
+      } @else {
+      <div class="tags-container">
+        @for(tag of tags; track tag) {
+        <div class="tag">{{ tag }}</div>
+        }
+      </div>
+
+      }
     </div>
   </div>
 </div>
