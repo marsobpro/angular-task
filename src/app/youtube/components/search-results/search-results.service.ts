@@ -54,7 +54,6 @@ export class SearchResultsService {
   }
 
   private fetchVideos(url: string) {
-    console.log('--------------FETCHING VIDEOS---------------');
     return this.httpClient.get<any>(url);
   }
 }

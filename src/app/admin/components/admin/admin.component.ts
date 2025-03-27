@@ -6,6 +6,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
 import {
   dateNotEarlierThan,
   dateNotInFuture,
@@ -16,11 +20,9 @@ import {
   ControlNames,
   ErrorMessages,
 } from '../../enums/card-creation-form.enums';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+
 import { selectAllCards } from '../../../store/card/custom-card.selectors';
 import * as CardActions from '../../../store/card/custom-card.actions';
-import { Router } from '@angular/router';
 import { ROUTES } from '../../../core/constants/app-routes';
 
 @Component({

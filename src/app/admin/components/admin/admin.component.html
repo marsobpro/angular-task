@@ -64,7 +64,7 @@
         />
 
         @if(getErrorMessage('videoLink')){
-        <mat-error>
+        <mat-error aria-live="assertive">
           {{ getErrorMessage("videoLink") }}
         </mat-error>
 
@@ -100,12 +100,14 @@
               name="tag_{{ index }}"
               aria-required="true"
               [formControlName]="index"
+              aria-label="Tag"
             />
 
             <button
               class="delete-tag-button"
               type="button"
               (click)="removeTag(index)"
+              aria-label="Delete tag "
               *ngIf="index > 0"
             >
               <span class="material-icons icon"> delete </span>
@@ -125,6 +127,7 @@
         type="button"
         (click)="addTag()"
         [disabled]="tagsControls.length >= 5"
+        aria-label="Add a new tag"
       >
         Add Tag
       </button>
