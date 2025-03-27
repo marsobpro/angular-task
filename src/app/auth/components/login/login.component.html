@@ -1,11 +1,11 @@
 <div class="login-page-container">
   <div class="form-wrapper">
-    <h3 class="form-header">Login</h3>
+    <h2 class="form-header">Login</h2>
     <form
       class="form"
       [formGroup]="form"
       (ngSubmit)="onSubmit()"
-      aria-label="Search Form"
+      aria-label="Login Form"
     >
       <!-- Login -->
       <mat-form-field appearance="fill">
@@ -17,6 +17,7 @@
           autocomplete="email"
           aria-required="true"
           formControlName="email"
+          aria-describedby="email-error"
           required
         />
       </mat-form-field>
@@ -31,28 +32,37 @@
           autocomplete="current-password"
           aria-required="true"
           formControlName="password"
+          aria-describedby="password-error"
           required
         />
       </mat-form-field>
 
       @if(submitted && form.get('password')?.hasError('passwordStrength')) {
-      <p class="form-error-text">
+      <p class="form-error-text" id="password-error" aria-live="assertive">
         {{ form.get('password')?.errors?.['passwordStrength'] }}
       </p>
       } @if(submitted && form.get('email')?.hasError('required')) {
-      <p class="form-error-text">Email is required.</p>
+      <p class="form-error-text" id="email-error" aria-live="assertive">
+        Email is required.
+      </p>
       } @if(submitted && form.get('email')?.hasError('email')) {
-      <p class="form-error-text">Please enter a valid email address.</p>
+      <p class="form-error-text" id="email-error" aria-live="assertive">
+        Please enter a valid email address.
+      </p>
       }
 
       <div class="action-buttons">
-        <app-button type="button" class="action-button register-button"
+        <app-button
+          type="button"
+          class="action-button register-button"
+          aria-label="Go to registration page"
           >Registration</app-button
         >
         <app-button
           role="submit"
           type="submit"
           class="action-button submit-button"
+          aria-label="Submit login form"
           >Login</app-button
         >
       </div>

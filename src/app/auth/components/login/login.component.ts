@@ -1,53 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-
-function passwordStrengthValidator(control: AbstractControl) {
-  const password = control.value;
-
-  const minLength = /.{8,}/;
-  const hasUpperCase = /[A-Z]/;
-  const hasLowerCase = /[a-z]/;
-  const hasNumber = /[0-9]/;
-  const hasSpecialChar = /[!@#?$%^&*(),.]/;
-
-  if (!minLength.test(password)) {
-    return {
-      passwordStrength: 'Your password must be at least 8 characters long.',
-    };
-  }
-  if (!hasUpperCase.test(password)) {
-    return {
-      passwordStrength:
-        'Your password must contain at least one uppercase letter.',
-    };
-  }
-  if (!hasLowerCase.test(password)) {
-    return {
-      passwordStrength:
-        'Your password must contain at least one lowercase letter.',
-    };
-  }
-  if (!hasNumber.test(password)) {
-    return {
-      passwordStrength: 'Your password must contain at least one number.',
-    };
-  }
-  if (!hasSpecialChar.test(password)) {
-    return {
-      passwordStrength:
-        'Your password must contain at least one special character (e.g., ! @ # ? ]).',
-    };
-  }
-
-  return null;
-}
+import passwordStrengthValidator from '../../helpers/password-strength-validator';
 
 @Component({
   selector: 'app-login',
@@ -69,13 +23,13 @@ export class LoginComponent {
 
   onSubmit(): void {
     this.submitted = true;
-    const { email, password } = this.form.value;
-    const emailValue = email ?? '';
-    const passwordValue = email ?? '';
-
     if (this.form.invalid) {
       return;
     }
-    this.authService.login(emailValue, passwordValue);
+    const { email } = this.form.value;
+    const emailValue = email ?? '';
+    const passwordValue = email ?? '';
+
+    this.authService.login();
   }
 }
