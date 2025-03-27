@@ -1,16 +1,13 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  inject,
-  Input,
-  OnDestroy,
-} from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { SearchResultsService } from './search-results.service';
 import { SearchCriterion } from '../../models/search-results.model';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, NEVER, Subscription, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FilterValue, SortDirection } from '../../enums/results.enum';
 import { SearchParams } from '../../enums/search-queries.enum';
+import { Store } from '@ngrx/store';
+import { selectAllCards } from '../../../store/card/custom-card.selectors';
+import * as CardActions from '../../../store/card/custom-card.actions';
 
 @Component({
   selector: 'app-search-results',
@@ -18,7 +15,7 @@ import { SearchParams } from '../../enums/search-queries.enum';
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss'],
 })
-export class SearchResultsComponent implements OnDestroy {
+export class SearchResultsComponent implements OnInit, OnDestroy {
   searchQuery = '';
   @Input() filterCriterion: SearchCriterion = {
     name: '',
@@ -27,22 +24,23 @@ export class SearchResultsComponent implements OnDestroy {
   };
   private searchResultsService = inject(SearchResultsService);
   private subscription: Subscription | undefined;
-
-  filteredResultsArray: any;
   originalResultsArray: any;
+  filteredResultsArray: any;
 
   isSettingsPanelOpen = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private cdRef: ChangeDetectorRef
-  ) {}
+  constructor(private route: ActivatedRoute, private store: Store) {}
 
   ngOnInit(): void {
     this.subscription =
-      this.searchResultsService.isSettingsPanelOpen$.subscribe((open) => {
-        this.isSettingsPanelOpen = open;
-      });
+      this.searchResultsService.isSettingsPanelOpen$.subscribe(
+        (open) => (this.isSettingsPanelOpen = open)
+      );
+
+    this.store.select(selectAllCards).subscribe((cardsData) => {
+      this.filteredResultsArray = cardsData;
+      this.originalResultsArray = cardsData;
+    });
 
     this.route.queryParams.subscribe((params) => {
       this.searchQuery = params[SearchParams.SEARCH_QUERY];
@@ -50,55 +48,42 @@ export class SearchResultsComponent implements OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
-
   private updateSearchResults() {
-    this.searchResultsService
-      .getSearchResults(this.searchQuery)
-      .pipe(
-        switchMap((response) => {
-          const videoIds = response.items.map((item: any) => item.id.videoId);
-          const videosFound =
-            this.searchResultsService.getVideoDetails(videoIds);
-
-          return videosFound;
-        }),
-        catchError((error) => {
-          console.error(error);
-          return NEVER;
-        })
-      )
-      .subscribe((data: any) => {
-        return (this.filteredResultsArray = data.items);
-      });
+    this.store.dispatch(
+      CardActions.getVideos({ searchQuery: this.searchQuery })
+    );
   }
+
+  //FILTERS
 
   handleFilterCriterionChange(criterion: SearchCriterion) {
     this.filterCriterion = criterion;
-    this.cdRef.detectChanges();
+    this.updateFilteredResults();
   }
 
   onWordOrSentenceSearch(searchString: string) {
-    if (searchString.trim() === '') {
-      this.filteredResultsArray = this.originalResultsArray;
-      return this.filteredResultsArray;
-    }
+    this.updateFilteredResults(searchString);
+  }
 
-    if (!this.originalResultsArray) {
-      this.originalResultsArray = this.filteredResultsArray;
-    }
+  private updateFilteredResults(searchString?: string) {
+    if (!this.originalResultsArray) return;
 
-    const normalizedSearchString = searchString.trim().toLowerCase();
+    let results = this.originalResultsArray;
 
-    this.filteredResultsArray = this.originalResultsArray.filter(
-      (result: any) => {
+    if (searchString) {
+      results = results.filter((result: any) => {
         const title = result?.snippet?.title ?? '';
-        return title.trim().toLowerCase().includes(normalizedSearchString);
-      }
-    );
+        return title
+          .trim()
+          .toLowerCase()
+          .includes(searchString.trim().toLowerCase());
+      });
+    }
 
-    return this.filteredResultsArray;
+    this.filteredResultsArray = results;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }

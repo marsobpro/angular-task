@@ -1,0 +1,94 @@
+@import "../../../styles/colors.scss";
+
+mat-card {
+  width: 260px;
+  height: 327px;
+  border-bottom: 4px solid;
+  &.red {
+    border-bottom-color: $red;
+  }
+  &.yellow {
+    border-bottom-color: $yellow;
+  }
+  &.green {
+    border-bottom-color: $green;
+  }
+  &.blue {
+    border-bottom-color: $blue;
+  }
+}
+
+mat-card-header {
+  overflow: hidden;
+  height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+mat-card-actions {
+  padding-inline: 1rem;
+  display: flex;
+  justify-content: space-between;
+  color: $text-primary;
+}
+
+.stat-container {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.2rem;
+  p {
+    margin: 0;
+    padding-top: 3px;
+  }
+  i {
+    display: flex;
+    font-size: 1rem;
+  }
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-size: 1rem;
+  font-weight: 500;
+
+  p {
+    margin-top: 0.6rem;
+    color: $text-primary;
+  }
+
+  a {
+    background-color: $blue;
+    color: $white;
+    padding: 0.4rem 1rem;
+    border-radius: 1rem;
+  }
+}
+
+.horizontal-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.more-button {
+  width: 50%;
+}
+
+.button {
+  cursor: pointer;
+  transition: 150ms ease-in-out;
+  &:hover {
+    opacity: 0.7;
+  }
+}

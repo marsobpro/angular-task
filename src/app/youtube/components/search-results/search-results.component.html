@@ -8,46 +8,7 @@
     <div
       *ngFor="let item of filteredResultsArray | sortResults : filterCriterion"
     >
-      <a
-        [routerLink]="['/results/videos', item.id]"
-        routerLinkActive="router-link-active"
-      >
-        <mat-card
-          appearance="outlined"
-          appUploadAge
-          [publishedAt]="item.snippet.publishedAt"
-        >
-          <mat-card-header>
-            <img
-              mat-card-image
-              [src]="item.snippet.thumbnails.medium.url"
-              alt="Video's thumbnail"
-            />
-          </mat-card-header>
-
-          <mat-card-actions>
-            <div class="stat-container">
-              <i class="material-icons"> visibility </i>
-              <p>{{ item.statistics.viewCount }}</p>
-            </div>
-            <div class="stat-container">
-              <i class="material-icons"> thumb_up </i>
-              <p>{{ item.statistics.likeCount }}</p>
-            </div>
-            <div class="stat-container">
-              <i class="material-icons"> chat </i>
-              <p>{{ item.statistics.commentCount }}</p>
-            </div>
-          </mat-card-actions>
-
-          <mat-card-content>
-            <p>
-              {{ item.snippet.title }}
-            </p>
-            <app-button>more...</app-button>
-          </mat-card-content>
-        </mat-card>
-      </a>
+      <app-video-card [video]="item" />
     </div>
   </div>
 </div>

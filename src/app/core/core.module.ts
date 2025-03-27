@@ -6,6 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
+import { RouterLink } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -13,9 +15,11 @@ import { SharedModule } from '../shared/shared.module';
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatTooltipModule,
     FormsModule,
     CommonModule,
     SharedModule,
+    RouterLink,
   ],
   exports: [NavbarComponent],
 })

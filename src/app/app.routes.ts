@@ -12,10 +12,18 @@ export const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
-  // {
-  //   path: 'admin',
-  //   loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-  // },
+  {
+    path: 'admin',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'favorites',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./favorites/favorites.module').then((m) => m.FavoritesModule),
+  },
   {
     path: 'results',
     canActivate: [AuthGuard],

@@ -11,12 +11,16 @@ import { YoutubeRoutingModule } from './youtube-routing.module';
 import { VideoDetailsComponent } from './components/video-details/video-details.component';
 import { provideHttpClient } from '@angular/common/http';
 import { SortResultsPipe } from './pipes/sort-results.pipe';
+import { VideoCardComponent } from './components/video-card/video-card.component';
+import { EffectsModule } from '@ngrx/effects';
+import { CustomCardEffect } from '../store/card/custom-card.effects';
 
 @NgModule({
   declarations: [
     SearchResultsComponent,
     FilteringCriteriaComponent,
     VideoDetailsComponent,
+    VideoCardComponent,
   ],
   imports: [
     YoutubeRoutingModule,
@@ -28,7 +32,13 @@ import { SortResultsPipe } from './pipes/sort-results.pipe';
     NgOptimizedImage,
     UploadAgeDirective,
     SortResultsPipe,
+    EffectsModule.forFeature([CustomCardEffect]),
   ],
-  exports: [SearchResultsComponent, FilteringCriteriaComponent],
+  providers: [CustomCardEffect],
+  exports: [
+    SearchResultsComponent,
+    FilteringCriteriaComponent,
+    VideoCardComponent,
+  ],
 })
 export class YoutubeModule {}

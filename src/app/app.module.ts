@@ -10,6 +10,12 @@ import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { SortResultsPipe } from './youtube/pipes/sort-results.pipe';
+import { StoreModule } from '@ngrx/store';
+import { cardReducer } from './store/card/custom-card.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { CustomCardEffect } from './store/card/custom-card.effects';
+import { favoritesReducer } from './store/favorites/favorites.reducer';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -22,6 +28,11 @@ import { SortResultsPipe } from './youtube/pipes/sort-results.pipe';
     CommonModule,
     AuthModule,
     SortResultsPipe,
+    StoreModule.forRoot({
+      cards: cardReducer,
+      favorites: favoritesReducer,
+    }),
+    EffectsModule.forRoot([CustomCardEffect]),
   ],
 
   providers: [provideHttpClient()],

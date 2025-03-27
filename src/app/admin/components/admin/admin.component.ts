@@ -6,14 +6,24 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
 import {
+  dateNotEarlierThan,
   dateNotInFuture,
   tagStartsWithHash,
+  validUrl,
 } from '../../../shared/validators/validators';
 import {
   ControlNames,
   ErrorMessages,
 } from '../../enums/card-creation-form.enums';
+
+import { selectAllCards } from '../../../store/card/custom-card.selectors';
+import * as CardActions from '../../../store/card/custom-card.actions';
+import { ROUTES } from '../../../core/constants/app-routes';
 
 @Component({
   selector: 'app-admin',
@@ -30,11 +40,20 @@ export class AdminComponent {
       Validators.maxLength(20),
     ]),
     description: new FormControl('', [Validators.maxLength(255)]),
-    imageLink: new FormControl('', [Validators.required]),
-    videoLink: new FormControl('', [Validators.required]),
-    creationDate: new FormControl('', [Validators.required, dateNotInFuture]),
+    imageLink: new FormControl('', [Validators.required, validUrl()]),
+    videoLink: new FormControl('', [Validators.required, validUrl()]),
+    creationDate: new FormControl('', [
+      Validators.required,
+      dateNotInFuture,
+      dateNotEarlierThan(2000),
+    ]),
     tags: new FormArray([this.createTag()]),
   });
+  cards$: Observable<any[]>;
+
+  constructor(private store: Store, private router: Router) {
+    this.cards$ = this.store.select(selectAllCards);
+  }
 
   get tagsControls(): AbstractControl[] {
     return (this.form.get('tags') as FormArray).controls;
@@ -91,11 +110,17 @@ export class AdminComponent {
       if (control?.hasError('required')) {
         return ErrorMessages.REQUIRED_IMAGE_LINK;
       }
+      if (control?.hasError('invalidUrl')) {
+        return ErrorMessages.INVALID_IMAGE_LINK;
+      }
     }
 
     if (controlName === ControlNames.VIDEO_LINK) {
       if (control?.hasError('required')) {
         return ErrorMessages.REQUIRED_VIDEO_LINK;
+      }
+      if (control?.hasError('invalidUrl')) {
+        return ErrorMessages.INVALID_VIDEO_LINK;
       }
     }
 
@@ -105,6 +130,10 @@ export class AdminComponent {
       }
       if (control?.hasError('dateInFuture')) {
         return ErrorMessages.DATE_IN_FUTURE;
+      }
+      if (control?.hasError('dateTooEarly')) {
+        const minDate = control.errors?.['dateTooEarly']?.['minDate'];
+        return ErrorMessages.DATE_TOO_EARLY.replace('{minDate}', minDate);
       }
     }
 
@@ -120,6 +149,15 @@ export class AdminComponent {
     return null;
   }
 
+  addCard(card: any) {
+    this.store.dispatch(CardActions.createCard({ card }));
+    this.router.navigate([ROUTES.HOME]);
+  }
+
+  deleteCard(id: string) {
+    this.store.dispatch(CardActions.deleteCard({ id }));
+  }
+
   onReset(): void {
     this.form.reset();
     this.formSubmitted = false;
@@ -130,7 +168,20 @@ export class AdminComponent {
     if (this.form.invalid) {
       return;
     }
-    alert('Form cuessfully submitted');
+    const { title, description, imageLink, videoLink, creationDate, tags } =
+      this.form.value;
+    const newCard = {
+      id: Math.random().toString(),
+      title: title,
+      description: description,
+      imageLink: imageLink,
+      videoLink: videoLink,
+      publishedAt: creationDate,
+      tags: tags,
+      isCustomCard: true,
+    };
+    this.addCard(newCard);
+    alert('You added a custom card');
     this.form.reset();
   }
 }

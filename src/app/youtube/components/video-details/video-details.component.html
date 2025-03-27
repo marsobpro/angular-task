@@ -3,42 +3,48 @@
     <span class="material-icons arrow-icon"> arrow_back </span>
   </button>
 
-  <!-- Card (Could be moved to another component though) -->
   <div class="card">
     <div class="thumbnail-wrapper">
-      <img
-        [src]="videoDetails?.snippet?.thumbnails?.high?.url"
-        class="img"
-        alt="Video thumbnail"
-      />
+      <img [src]="imageUrl" class="img" alt="Video thumbnail" />
     </div>
-    <div
-      class="details-wrapper"
-      appUploadAge
-      [publishedAt]="videoDetails?.snippet?.publishedAt"
-    >
+    <div class="details-wrapper" appUploadAge [publishedAt]="publishedAt">
+      <!-- Title and upload date -->
       <div class="title-upload-date-container">
-        <h3 class="title">{{ videoDetails?.snippet.title }}</h3>
+        <h3 class="title">{{ title }}</h3>
         <p class="upload-date">
-          {{ videoDetails?.snippet.publishedAt | date : "EEEE, MMMM dd, YYYY" }}
+          {{ publishedAt | date : "EEEE, MMMM dd, YYYY" }}
         </p>
       </div>
-      <p class="description">{{ videoDetails?.snippet.description }}</p>
+      <p class="description">{{ description }}</p>
+
+      <!-- Stats for API-cards -->
+      @if(isApiCard) {
       <div class="stats-container">
         <div class="stat">
-          <span class="material-icons"> visibility </span
-          >{{ videoDetails?.statistics.viewCount }}
+          <span class="material-icons"> visibility </span>
+          {{ viewCount }}
         </div>
         <div class="stat">
           <span class="material-icons"> thumb_up </span>
-          {{ videoDetails?.statistics.likeCount }}
+          {{ likeCount }}
         </div>
 
         <div class="stat">
           <span class="material-icons"> content_copy </span>
-          {{ videoDetails?.statistics.commentCount }}
+          {{ commentCount }}
         </div>
       </div>
+      }
+
+      <!-- Tags for custom cards -->
+      @else {
+      <div class="tags-container">
+        @for(tag of tags; track tag) {
+        <div class="tag">{{ tag }}</div>
+        }
+      </div>
+
+      }
     </div>
   </div>
 </div>

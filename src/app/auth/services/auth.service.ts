@@ -3,22 +3,20 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ROUTES } from '../../core/constants/app-routes';
 
+const AUTH_TOKEN_KEY = 'authToken';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  isLoggedInFromLocalStorage = !!localStorage.getItem('authToken');
+  isLoggedInFromLocalStorage = !!localStorage.getItem(AUTH_TOKEN_KEY);
   private dataSubject = new BehaviorSubject<boolean>(
     this.isLoggedInFromLocalStorage
   );
   public data$: Observable<boolean> = this.dataSubject.asObservable();
-  constructor(private router: Router) {
-    if (this.isLoggedIn()) {
-      this.router.navigate([ROUTES.RESULTS]);
-    }
-  }
+  constructor(private router: Router) {}
 
-  login(login: string, password: string): void {
+  login(): void {
     const token = 'some-auth-token';
     localStorage.setItem('authToken', token);
     this.dataSubject.next(true);

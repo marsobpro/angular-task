@@ -1,0 +1,18 @@
+<div class="page-wrapper">
+  @if (!isEmpty) { @for (video of favorites$ | async; track video.id) {
+  <div class="cards-wrapper">
+    <app-video-card [video]="video" />
+  </div>
+  } }
+
+  <!-- Favorites empty screen -->
+  @else {
+  <div class="empty-state">
+    <span class="material-icons empty-icon" aria-hidden="true">
+      favorite_border
+    </span>
+    <h2>No Favorite Videos Yet</h2>
+    <p>Start adding videos to your favorites to see them here!</p>
+  </div>
+  }
+</div>
