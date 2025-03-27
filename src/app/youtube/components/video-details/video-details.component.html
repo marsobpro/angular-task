@@ -8,6 +8,7 @@
       <img [src]="imageUrl" class="img" alt="Video thumbnail" />
     </div>
     <div class="details-wrapper" appUploadAge [publishedAt]="publishedAt">
+      <!-- Title and upload date -->
       <div class="title-upload-date-container">
         <h3 class="title">{{ title }}</h3>
         <p class="upload-date">
@@ -15,6 +16,8 @@
         </p>
       </div>
       <p class="description">{{ description }}</p>
+
+      <!-- Stats for API-cards -->
       @if(isApiCard) {
       <div class="stats-container">
         <div class="stat">
@@ -31,7 +34,10 @@
           {{ commentCount }}
         </div>
       </div>
-      } @else {
+      }
+
+      <!-- Tags for custom cards -->
+      @else {
       <div class="tags-container">
         @for(tag of tags; track tag) {
         <div class="tag">{{ tag }}</div>

@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { SearchResultsService } from '../search-results/search-results.service';
+import { combineLatest, map } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectCustomCards } from '../../../store/card/custom-card.selectors';
-import { combineLatest, map } from 'rxjs';
+import { SearchResultsService } from '../search-results/search-results.service';
 
 @Component({
   selector: 'app-video-details',

@@ -74,7 +74,7 @@ export class VideoCardComponent {
     );
   }
 
-  removeFromFavorites(id: any) {
+  removeFromFavorites(id: string) {
     this.store.dispatch(removeFromFavorites({ videoId: id }));
     alert('Video removed from favtorites.');
   }

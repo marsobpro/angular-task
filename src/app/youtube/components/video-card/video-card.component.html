@@ -25,18 +25,33 @@
       <a
         [routerLink]="['/results/videos', video.id]"
         routerLinkActive="router-link-active"
+        aria-label="Go to video details"
         >more...</a
       >
 
+      <!-- Remove from favorites -->
       @if(isFavorite$ | async ) {
-      <button class="button" (click)="removeFromFavorites(video.id)">
+      <button
+        class="button"
+        (click)="removeFromFavorites(video.id)"
+        aria-label="Remove video from favorites"
+      >
         <span class="material-icons"> favorite </span>
       </button>
-      } @else {
-      <button class="button" (click)="addToFavorites(video)">
+      }
+
+      <!-- Add to favorites -->
+      @else {
+      <button
+        class="button"
+        (click)="addToFavorites(video)"
+        aria-label="Add video to favorites"
+      >
         <span class="material-icons"> favorite_border </span>
       </button>
-      } @if(!isApiCard) {
+      }
+      <!-- Delete card (available only for custom cards) -->
+      @if(!isApiCard) {
       <span class="material-icons button" (click)="deleteCard(video.id)">
         delete
       </span>
