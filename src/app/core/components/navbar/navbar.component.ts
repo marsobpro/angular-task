@@ -5,11 +5,11 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, filter, Subject } from 'rxjs';
 import { SearchResultsService } from '../../../youtube/components/search-results/search-results.service';
 import { AuthService } from '../../../auth/services/auth.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
-  @Output() isSettingsPanelOpen = new EventEmitter();
+  @Output() isSettingsPanelOpen = new EventEmitter<boolean>();
 
   isSortingOpen = false;
   searchStringSubject = new Subject<string>();
@@ -46,9 +46,10 @@ export class NavbarComponent implements OnInit {
       .subscribe((value) => this.performSearch(value));
   }
 
-  onSearchChange(event: string) {
-    if (!event) return;
-    this.searchStringSubject.next(event);
+  onSearchChange(event: string): void {
+    if (event?.trim()) {
+      this.searchStringSubject.next(event);
+    }
   }
 
   performSearch(value: string) {

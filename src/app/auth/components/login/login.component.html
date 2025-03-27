@@ -37,11 +37,16 @@
         />
       </mat-form-field>
 
+      <!-- Errors -->
+      <!-- For password -->
       @if(submitted && form.get('password')?.hasError('passwordStrength')) {
       <p class="form-error-text" id="password-error" aria-live="assertive">
         {{ form.get('password')?.errors?.['passwordStrength'] }}
       </p>
-      } @if(submitted && form.get('email')?.hasError('required')) {
+      }
+
+      <!-- For email -->
+      @if(submitted && form.get('email')?.hasError('required')) {
       <p class="form-error-text" id="email-error" aria-live="assertive">
         Email is required.
       </p>

@@ -1,11 +1,16 @@
 <nav class="nav">
   <div class="search-content-wrapper">
-    <a href="/" class="button logo-button" mat-icon-button>
+    <a
+      href="/"
+      class="button logo-button"
+      mat-icon-button
+      aria-label="Go to home"
+    >
       <span class="material-icons icon logo-icon"> play_arrow </span>
     </a>
 
     <!-- Search form -->
-    <form class="form-container" aria-label="Search Form">
+    <form class="form-container" aria-label="Video search form">
       <div class="search-input-wrapper">
         <input
           type="text"
@@ -17,6 +22,8 @@
           #searchInput
         />
       </div>
+
+      <!-- Sorting/settings button -->
       <button
         class="button settings-button"
         (click)="onSettingsClick()"
@@ -34,7 +41,7 @@
     <a
       [routerLink]="['/favorites']"
       class="button"
-      aria-label="Go to favorite videos"
+      aria-label="Favorite videos"
       matTooltip="Your favorite videos"
     >
       <span class="material-icons icon"> favorite </span>
@@ -43,7 +50,7 @@
     <a
       routerLink="/admin"
       class="button"
-      aria-label="Go to user profile"
+      aria-label="User profile"
       matTooltip="Add new card"
     >
       <span class="material-icons icon"> add_circle </span>
