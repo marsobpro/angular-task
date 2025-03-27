@@ -1,5 +1,13 @@
 <div class="page-wrapper">
-  <div *ngFor="let video of favorites$ | async">
+  @if (!isEmpty) { @for (video of favorites$ | async; track video.id) {
+  <div class="cards-wrapper">
     <app-video-card [video]="video" />
   </div>
+  } } @else {
+  <div class="empty-state">
+    <span class="material-icons empty-icon"> favorite_border </span>
+    <h2>No Favorite Videos Yet</h2>
+    <p>Start adding videos to your favorites to see them here!</p>
+  </div>
+  }
 </div>

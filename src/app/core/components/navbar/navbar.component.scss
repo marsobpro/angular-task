@@ -1,6 +1,6 @@
 @import "../../../styles/colors.scss";
 
-nav {
+.nav {
   position: relative;
   display: flex;
   justify-content: center;
@@ -9,7 +9,6 @@ nav {
 }
 
 .search-content-wrapper {
-  margin-inline: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +31,7 @@ nav {
 }
 
 .icon {
-  color: white;
+  color: $white;
 }
 
 .logo-button {
@@ -83,4 +82,22 @@ nav {
   display: flex;
   align-items: center;
   gap: 0.625rem;
+}
+
+@media (max-width: 1200px) {
+  .nav {
+    flex-direction: column-reverse;
+    gap: 3rem;
+  }
+
+  .user-data-wrapper {
+    position: static;
+    margin-left: auto;
+  }
+
+  .search-input-wrapper {
+    input {
+      width: 12rem;
+    }
+  }
 }

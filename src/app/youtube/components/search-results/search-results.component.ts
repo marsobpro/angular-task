@@ -24,7 +24,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   };
   private searchResultsService = inject(SearchResultsService);
   private subscription: Subscription | undefined;
-  allCards: any;
   originalResultsArray: any;
   filteredResultsArray: any;
 
@@ -39,7 +38,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       );
 
     this.store.select(selectAllCards).subscribe((cardsData) => {
-      this.allCards = cardsData;
       this.filteredResultsArray = cardsData;
       this.originalResultsArray = cardsData;
     });

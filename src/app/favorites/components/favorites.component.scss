@@ -1,4 +1,4 @@
-.page-wrapper {
+.cards-wrapper {
   margin-top: 4rem;
   width: 100%;
 
@@ -12,4 +12,25 @@
 .header {
   margin-inline: auto;
   text-align: center;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 4rem;
+  margin-inline: auto;
+
+  .empty-icon {
+    font-size: 8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
 }

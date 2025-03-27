@@ -11,8 +11,13 @@ import { selectFavoritesVideos } from '../../store/favorites/favorites.selectors
 })
 export class FavoritesComponent {
   favorites$: Observable<any[]>;
+  isEmpty: boolean = false;
 
   constructor(private store: Store<{ favorites: { videos: any[] } }>) {
     this.favorites$ = this.store.select(selectFavoritesVideos);
+
+    this.favorites$.subscribe((videos) => {
+      this.isEmpty = videos.length === 0;
+    });
   }
 }
