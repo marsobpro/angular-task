@@ -22,6 +22,7 @@
         (click)="onSettingsClick()"
         type="button"
         aria-label="Open settings"
+        matTooltip="Sort the results"
       >
         <span class="material-icons icon"> tune </span>
       </button>
@@ -30,12 +31,22 @@
 
   <!-- User data -->
   <div class="user-data-wrapper">
-    <a [routerLink]="['/favorites']">
-      <span class="material-icons"> favorite </span>
+    <a
+      [routerLink]="['/favorites']"
+      class="button"
+      aria-label="Go to favorite videos"
+      matTooltip="Your favorite videos"
+    >
+      <span class="material-icons icon"> favorite </span>
     </a>
     <p class="user-name">Your name</p>
-    <a routerLink="/admin" class="button" aria-label="Go to user profile">
-      <span class="material-icons icon"> account_circle </span>
+    <a
+      routerLink="/admin"
+      class="button"
+      aria-label="Go to user profile"
+      matTooltip="Add new card"
+    >
+      <span class="material-icons icon"> add_circle </span>
     </a>
     @if (this.authService.data$ | async) {
     <app-button class="logout-button" (click)="onLogout()" aria-label="Logout">
