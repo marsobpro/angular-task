@@ -3,9 +3,14 @@
   <div class="cards-wrapper">
     <app-video-card [video]="video" />
   </div>
-  } } @else {
+  } }
+
+  <!-- Favorites empty screen -->
+  @else {
   <div class="empty-state">
-    <span class="material-icons empty-icon"> favorite_border </span>
+    <span class="material-icons empty-icon" aria-hidden="true">
+      favorite_border
+    </span>
     <h2>No Favorite Videos Yet</h2>
     <p>Start adding videos to your favorites to see them here!</p>
   </div>
