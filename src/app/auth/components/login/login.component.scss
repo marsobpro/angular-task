@@ -29,8 +29,15 @@
 }
 
 .action-buttons {
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-left: auto;
+}
+
+.form-error-text {
+  margin: 0.2rem;
+  font-size: 0.8rem;
+  color: red;
 }

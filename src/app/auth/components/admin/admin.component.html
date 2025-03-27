@@ -1,0 +1,145 @@
+<div class="admin-page-container">
+  <div class="form-wrapper">
+    <h3 class="form-header">Create card</h3>
+    <form class="form" aria-label="Create card form" [formGroup]="form">
+      <!-- Title -->
+
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          type="text"
+          name="title"
+          aria-required="true"
+          formControlName="title"
+        />
+        @if(getErrorMessage('title')){
+        <mat-error aria-live="assertive">
+          {{ getErrorMessage("title") }}
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Description -->
+      @if(getErrorMessage('description')){
+      <p class="form-error-text" aria-live="assertive">
+        {{ getErrorMessage("description") }}
+      </p>
+      }
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          name="description"
+          aria-required="true"
+          formControlName="description"
+        />
+      </mat-form-field>
+
+      <!-- Image link -->
+
+      <mat-form-field appearance="fill">
+        <mat-label>Image Link</mat-label>
+        <input
+          matInput
+          name="imageLink"
+          aria-required="true"
+          formControlName="imageLink"
+        />
+        @if(getErrorMessage('imageLink')){
+        <mat-error aria-live="assertive">
+          {{ getErrorMessage("imageLink") }}
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Video Link -->
+      <mat-form-field appearance="fill">
+        <mat-label>Video Link</mat-label>
+        <input
+          matInput
+          name="videoLink"
+          aria-required="true"
+          formControlName="videoLink"
+        />
+
+        @if(getErrorMessage('videoLink')){
+        <mat-error>
+          {{ getErrorMessage("videoLink") }}
+        </mat-error>
+
+        }
+      </mat-form-field>
+
+      <!-- Creation date -->
+
+      <mat-form-field appearance="fill">
+        <mat-label>Creation Date</mat-label>
+        <input
+          matInput
+          name="creationDate"
+          type="date"
+          aria-required="true"
+          formControlName="creationDate"
+        />
+        @if(getErrorMessage('creationDate')){
+        <mat-error aria-live="assertive">
+          {{ getErrorMessage("creationDate") }}
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Tags  -->
+      <div class="tags-container" formArrayName="tags">
+        @for ( tagControl of tagsControls; track tagControl; let index = $index)
+        {
+        <div>
+          <div class="tag-wrapper">
+            <input
+              class="tag-input"
+              name="tag_{{ index }}"
+              aria-required="true"
+              [formControlName]="index"
+            />
+
+            <button
+              class="delete-tag-button"
+              type="button"
+              (click)="removeTag(index)"
+              *ngIf="index > 0"
+            >
+              <span class="material-icons icon"> delete </span>
+            </button>
+          </div>
+          @if (getErrorMessage('tags_' + index)) {
+          <p class="form-error-text" aria-live="assertive">
+            {{ getErrorMessage("tags_" + index) }}
+          </p>
+          }
+        </div>
+        }
+      </div>
+
+      <button
+        class="add-tag-button"
+        type="button"
+        (click)="addTag()"
+        [disabled]="tagsControls.length >= 5"
+      >
+        Add Tag
+      </button>
+
+      <div class="action-buttons">
+        <app-button
+          version="underlined"
+          class="action-button register-button"
+          (click)="onReset()"
+          >Reset</app-button
+        >
+        <button (click)="onSubmit()" class="action-button submit-button">
+          Create card
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
